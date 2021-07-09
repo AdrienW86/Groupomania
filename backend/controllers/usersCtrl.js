@@ -167,7 +167,7 @@ exports.getUserProfil = (req, res, next) => {
     return res.status(400).json({ 'erreur': "token erroné" });
 
     models.User.findOne({
-    attributes: ['id', 'email','username','bio',"isAdmin","createdAt","updatedAt"],
+    attributes: ['id', 'email','username','bio','avatar',"isAdmin","createdAt","updatedAt"],
         where: { id: userId }
     }).then(user => {
         if (user) {
@@ -188,11 +188,12 @@ exports.updateUserProfil = (req, res, next) => {
     let userId           = jwt.getUserId(headerAuth);
 
     let password = req.body.password;
-    let bio = req.body.bio;
+    let bio      = req.body.bio;
+    let avatar   = req.body.avatar;
     let username = req.body.username;
 
     models.User.findOne({
-        attributes: ['id', 'password'],
+        attributes: ['id', 'email','username','bio','avatar',"isAdmin","createdAt","updatedAt"],
         where: { id: userId }
     }).then(userFound => {
         if(userFound) {
@@ -228,6 +229,7 @@ exports.deleteUserProfil = (req, res, next) => {
     let userId           = jwt.getUserId(headerAuth);
   
     models.User.findOne({
+        attributes: ['id', 'email','username','bio','avatar',"isAdmin","createdAt","updatedAt"],
         where: { id: userId}
     })
     .then((user) => {
@@ -256,14 +258,13 @@ exports.getAllUsers = (req, res, next) => {
 
 // Afficher le profil d'un seul utilisateur
 
-exports.getOneUser = (req, res, next) => {
-    let headerAuth = req.headers['authorization'];
-    let userid = jwt.getUserId(headerAuth);
-
-    if (userid < 0)
-    return res.status(400).json({ 'erreur': "token erroné"});
-
-    models.User.findOne({
-        attributes
-    })
+exports.getOneUser = async (req, res) => {
+    try {
+        const user = await User.findOne({ where: {
+            id: req.user.id
+        }})
+        res.status(200).send(user)
+    } catch (err) {
+        res.status(500).send(err)
+    }
 }

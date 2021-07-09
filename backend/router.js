@@ -13,7 +13,8 @@ const userCtrl = require('./controllers/usersCtrl');
 router.post('/admin/', userCtrl.admin);
 router.post('/signup/', userCtrl.signup);
 router.post('/login/',userCtrl.login);
-router.get('/all/', userCtrl.getAllUsers)
+router.get('/users/', userCtrl.getAllUsers);
+router.get('/users/',userCtrl.getOneUser);
 router.get('/profil/', userCtrl.getUserProfil);
 router.put('/profil/', userCtrl.updateUserProfil);
 router.delete('/profil/', userCtrl.deleteUserProfil);
@@ -22,6 +23,7 @@ router.delete('/profil/', userCtrl.deleteUserProfil);
 
 router.post('/messages/new/', multer, messageCtrl.createMessage);
 router.get('/messages/', messageCtrl.listMessage);
+//router.get('/messages/:id', messageCtrl.oneMessage);
 //router.delete('/messages/:id/', messageCtrl.deleteMessage); // a finaliser
 //router.put('messages/:id/', messageCtrl.modifyMessage);     // à finaliser
 
