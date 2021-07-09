@@ -13,15 +13,15 @@ const userCtrl = require('./controllers/usersCtrl');
 router.post('/admin/', userCtrl.admin);
 router.post('/signup/', userCtrl.signup);
 router.post('/login/',userCtrl.login);
-//router.get('/all/', userCtrl.getAllUsers)
-//router.get('/me/', userCtrl.getUserProfil);
-//router.put('/me/', userCtrl.updateUserProfil);
-//router.delete('/me/', userCtrl.deleteUserProfil);
+router.get('/all/', userCtrl.getAllUsers)
+router.get('/profil/', userCtrl.getUserProfil);
+router.put('/profil/', userCtrl.updateUserProfil);
+router.delete('/profil/', userCtrl.deleteUserProfil);
 
 // Messages routes
 
 router.post('/messages/new/', multer, messageCtrl.createMessage);
-//router.get('/messages/', messageCtrl.listMessage);
+router.get('/messages/', messageCtrl.listMessage);
 //router.delete('/messages/:id/', messageCtrl.deleteMessage); // a finaliser
 //router.put('messages/:id/', messageCtrl.modifyMessage);     // à finaliser
 

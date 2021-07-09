@@ -1,24 +1,26 @@
 // Imports
 
-const models = require('../models');
-const jwtUtils = require('../middleware/jwt.utils');
+const models = require('../models/');
+const jwt = require('../middleware/jwt.utils');
 const TITLE_LIMIT = 2;
 const CONTENT_LIMIT = 4;
 
 // Routes
+
+// Création d'un message
 
 exports.createMessage = (req, res, next) => {
 
     //Gettin auth header
 
     let headerAuth = req.headers['authorization'];
-    let userId     = jwtUtils.getUserId(headerAuth);
+    let userId     = jwt.getUserId(headerAuth);
 
     let title      = req.body.title;
     let content    = req.body.content;
-    let picture    = req.body.picture;
+    let picture    = "";
     if (req.file) {
-        image = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
+        picture = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
     }
     if (title == null || content == null) {
         return res.status(400).json({ 'erreur': "paramètres manquants" });
@@ -34,7 +36,7 @@ exports.createMessage = (req, res, next) => {
             models.Message.create({
                 title  : title,
                 content: content,
-                picture: image,
+                picture: picture,
                 likes  : 0,
                 UserId : userFound.id
             })
@@ -53,6 +55,17 @@ exports.createMessage = (req, res, next) => {
         return res.status(500).json({ 'erreur': "impossible de trouver l'utilisateur" });
     });
 }
+
+// Modification d'un message
+
+
+
+
+// Suppression d'un message
+
+
+
+// Afficher la liste des messages
 
 exports.listMessage = (req, res, next) => {
     let fields = req.query.fields;
@@ -80,3 +93,5 @@ exports.listMessage = (req, res, next) => {
             res.status(500).json({ 'erreur': "champs invalides" });
     })
 }
+
+// Afficher un seul message

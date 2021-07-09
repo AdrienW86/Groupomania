@@ -1,7 +1,7 @@
 // Imports
 
 const bcrypt = require('bcrypt');
-const jwt    = require('jsonwebtoken');
+const jwt    = require('../middleware/jwt.utils');
 const models = require('../models/index');
 
 // Regex
@@ -138,23 +138,132 @@ exports.login = (req, res, next) => {
                 if(resBycrypt) {
                     return res.status(200).json({
                         'userId': userFound.id,
-                        'token': jwtUtils.generateTokenForUser(userFound),
+                        'token': jwt.generateTokenForUser(userFound),
                         'isAdmin': userFound.isAdmin,
                         'username': userFound.username,
                         'isLog': +1
                     });
-
                 }else{
                     return res.status(403).json({ 'erreur': "mot de passe invalide" });
                 }
             });
-
         }else{
             return res.status(404).json({ 'erreur': "utilisateur introuvable dans la base de données" });
         }
-
     })
     .catch (err => {
         return res.status(500).json({ 'erreur': "impossible de connecter l'utilisateur" });
     });
+}
+
+// Afficher le profil de l'utilisateur
+
+exports.getUserProfil = (req, res, next) => {
+
+    let headerAuth    = req.headers['authorization'];
+    let userId        = jwt.getUserId(headerAuth);
+
+    if (userId < 0)
+    return res.status(400).json({ 'erreur': "token erroné" });
+
+    models.User.findOne({
+    attributes: ['id', 'email','username','bio',"isAdmin","createdAt","updatedAt"],
+        where: { id: userId }
+    }).then(user => {
+        if (user) {
+            res.status(201).json(user);
+        }else{
+            res.status(404).json({ 'erreur': "utilisateur introuvable" });
+        }
+    }).catch(err => {
+        res.status(500).json({ 'erreur': "recherche de l'utilisateur impossible" });
+    });
+}
+
+// Modifier le profil de l'utilisateur
+
+exports.updateUserProfil = (req, res, next) => {
+
+    let headerAuth       = req.headers['authorization'];
+    let userId           = jwt.getUserId(headerAuth);
+
+    let password = req.body.password;
+    let bio = req.body.bio;
+    let username = req.body.username;
+
+    models.User.findOne({
+        attributes: ['id', 'password'],
+        where: { id: userId }
+    }).then(userFound => {
+        if(userFound) {
+            userFound.update({
+                password: (password ? password : userFound.password),
+                username: (username ? username : userFound.username),
+                bio: (bio ? bio : userFound.bio),
+                avatar:(avatar ? avatar : userFound.avatar)
+            }).then(userFound => {
+                if (userFound) {
+                    return res.status(201).json(userFound);
+                }else{
+                    return res.status(500).json({ 'erreur': "la mise à jour de l'utilisateur a échouée"})
+                }
+
+            }).catch(err => {
+                res.status(500).json({ 'erreur': "la mise à jour de l'utilisateur a échouée" });
+            });
+        }else{
+            res.status(404).json({ 'erreur': "utilisateur introuvable" });
+        }
+    
+    }).catch(err => {
+        return res.status(500).json({ 'erreur': "utilisateur introuvable" });
+    });
+}
+
+// Supprimer le profil de l'utilisateur
+
+exports.deleteUserProfil = (req, res, next) => {
+
+    let headerAuth       = req.headers['authorization'];
+    let userId           = jwt.getUserId(headerAuth);
+  
+    models.User.findOne({
+        where: { id: userId}
+    })
+    .then((user) => {
+        user.destroy();
+        res.status(200).json(user.id + " a été supprimé");
+
+    }).catch((err) => {
+        res.status(404).json({ 'erreur': "la suppression a échouée" });
+    });
+
+}
+
+// Afficher la liste de tous les utilisateurs
+
+exports.getAllUsers = (req, res, next) => {
+
+    models.User.findAll()
+
+    .then(users => {
+        res.status(200).json(users);
+
+    }).catch (err => {
+        res.status(500).json({ 'erreur': "impossible d'afficher les utilisateurs"});
+    });   
+}
+
+// Afficher le profil d'un seul utilisateur
+
+exports.getOneUser = (req, res, next) => {
+    let headerAuth = req.headers['authorization'];
+    let userid = jwt.getUserId(headerAuth);
+
+    if (userid < 0)
+    return res.status(400).json({ 'erreur': "token erroné"});
+
+    models.User.findOne({
+        attributes
+    })
 }
