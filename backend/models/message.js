@@ -19,14 +19,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Message.init({
-    
-    isAdmin: DataTypes.BOOLEAN,
+    idUSERS: DataTypes.INTEGER,
     title: DataTypes.STRING,
     content: DataTypes.STRING,
-    attachment: DataTypes.STRING,
-    username: DataTypes.STRING,
     likes: DataTypes.INTEGER,
-    dislikes: DataTypes.INTEGER
+    picture: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Message',
