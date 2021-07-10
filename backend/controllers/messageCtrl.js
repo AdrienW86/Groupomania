@@ -18,7 +18,7 @@ exports.createMessage = (req, res, next) => {
 
     let title      = req.body.title;
     let content    = req.body.content;
-    let picture    = "";
+    let picture    = req.body.picture;
     if (req.file) {
         picture = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
     }

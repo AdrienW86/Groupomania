@@ -7,9 +7,8 @@ const messageCtrl = require('./controllers/messageCtrl');
 const userCtrl = require('./controllers/usersCtrl');
 //const likesCtrl = require('../controllers/likesCtrl');
 
-
-
 // Users routes
+
 router.post('/admin/', userCtrl.admin);
 router.post('/signup/', userCtrl.signup);
 router.post('/login/',userCtrl.login);

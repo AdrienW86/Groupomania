@@ -9,13 +9,9 @@ const models = require('../models/index');
 const REGEX_EMAIL = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const REGEX_PASSWORD = /^[a-zA-Z]\w{3,14}$/;
 
-// Routes
-
 // Création des administrateurs
 
 exports.admin = (req, res, next) => {
-
-    // Params
 
     let email    = req.body.email;
     let password = req.body.password;
@@ -86,7 +82,7 @@ exports.signup = (req, res, next) => {
 
     models.User.findOne({
         attributes: ['email'],
-        where: { email: email }
+        where     : { email: email }
     })
     .then(userFound => {
         if (!userFound) {
@@ -137,11 +133,11 @@ exports.login = (req, res, next) => {
             bcrypt.compare(password, userFound.password, function(errBycrypt, resBycrypt) {
                 if(resBycrypt) {
                     return res.status(200).json({
-                        'userId': userFound.id,
-                        'token': jwt.generateTokenForUser(userFound),
-                        'isAdmin': userFound.isAdmin,
+                        'userId'  : userFound.id,
+                        'token'   : jwt.generateTokenForUser(userFound),
+                        'isAdmin' : userFound.isAdmin,
                         'username': userFound.username,
-                        'isLog': +1
+                        'isLog'   : +1
                     });
                 }else{
                     return res.status(403).json({ 'erreur': "mot de passe invalide" });
@@ -168,7 +164,7 @@ exports.getUserProfil = (req, res, next) => {
 
     models.User.findOne({
     attributes: ['id', 'email','username','bio','avatar',"isAdmin","createdAt","updatedAt"],
-        where: { id: userId }
+         where: { id: userId }
     }).then(user => {
         if (user) {
             res.status(201).json(user);
@@ -227,7 +223,7 @@ exports.deleteUserProfil = (req, res, next) => {
   
     models.User.findOne({
         attributes: ['id', 'email','username','bio','avatar',"isAdmin","createdAt","updatedAt"],
-        where: { id: userId}
+        where     : { id: userId}
     })
     .then((user) => {
         user.destroy();
