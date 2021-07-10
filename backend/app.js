@@ -17,8 +17,7 @@ app.use((req, res, next) => {
 
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true })); //Parse URL-encoded bodies
-app.use(helmet());           // Protection contre les injections SQL et XMS
-
+app.use(helmet());                               // Protection contre les injections SQL et XMS
 
 module.exports = app;
 

@@ -58,6 +58,39 @@ exports.createMessage = (req, res, next) => {
 
 // Modification d'un message
 
+exports.updateMessage = (req, res, next) => {
+
+    let headerAuth       = req.headers['authorization'];
+    
+    let title            = req.body.title;
+    let content          = req.body.content;
+    let picture          = req.body.picture;
+    
+
+    models.Message.findByPk(req.params.id)
+        
+    .then(messageFound =>{
+        if(messageFound) {
+            messageFound.update({
+                title  : (title   ? title   : messageFound.title),
+                content: (content ? content : messageFound.content),
+                picture: (picture ? picture : messageFound.picture)
+            }).then(messageFound => {
+                if (messageFound) {
+                    return res.status(201).json(messageFound);
+                }else{
+                    return res.status(500).json({ 'ereur': "la mise à jour du message à échouée"})
+                }
+            }).catch(err => {
+                res.status(500).json(err)
+            })
+        }else{
+            res.status(404).json({ 'erreur': "message introuvable"})
+        }
+    }).catch(err => {
+        return res.status(500).json(err)
+    });
+}
 
 
 
@@ -68,26 +101,11 @@ exports.createMessage = (req, res, next) => {
 // Afficher la liste des messages
 
 exports.listMessage = (req, res, next) => {
-    let fields = req.query.fields;
-    let limit = parseInt(req.query.limit);
-    let offset = parseInt(req.query.offset);
-    let order = req.query.order;
-
-    models.Message.findAll({
-        order: [(order != null) ? order.split(':') : ['createdAt', 'DESC']],
-        attributes: (fields != '*' && fields != null) ? fields.split(',') : null,
-        limit: (!isNaN(limit)) ? limit : 20,
-        offset: (!isNaN(offset)) ? offset : 20,
-        include: [{
-            model: models.User,
-            attributes: ['email']
-        }]
-        }).then(messages => {
-            if (messages) {
-                res.status(200).json(messages);
-            }else{
-                res.status(404).json({ 'erreur': "aucun messages trouvés" });
-            }    
+    
+    models.Message.findAll()       
+        .then(messages => {       
+        res.status(200).json(messages);
+            
         }).catch(err => {
             console.log(err);
             res.status(500).json({ 'erreur': "champs invalides" });
@@ -96,3 +114,12 @@ exports.listMessage = (req, res, next) => {
 
 // Afficher un seul message
 
+exports.getOneMessage = (req, res, next) => {
+
+    models.Message.findByPk(req.params.id)
+    .then(messages => {
+        res.status(200).json(messages);
+    }).catch (err => {
+        res.status(500).json({ 'erreur': "impossible d'afficher le message"})
+    })
+}
