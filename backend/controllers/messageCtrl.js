@@ -96,6 +96,22 @@ exports.updateMessage = (req, res, next) => {
 
 // Suppression d'un message
 
+exports.deleteMessage =(req, res, next) => {
+    let  messageId = req.params.id;
+
+    models.Message.destroy(
+        { where: {id: messageId }})
+        .then(messageFound => {
+            if(messageFound ==1) {
+                res.status(200).json({ 'message': "Le message a bien été supprimé"})
+            }else{
+                res.status(404).json({ 'erreur': " Le message n'a pas été supprimé"})
+            }
+        }).catch(err=> {
+           res.status(500).json({err}) 
+        })
+}
+
 
 
 // Afficher la liste des messages

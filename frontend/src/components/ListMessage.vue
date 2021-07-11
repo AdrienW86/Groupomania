@@ -53,19 +53,6 @@ mounted () {
         console.log(err);
       });
     }, 
-    
-
-    methods: {
-    getOneUser() {
-        let id = this.message.id
-     
-       console.log(id) 
-       
-        
-    }
-
-}
-
 }
 
 
