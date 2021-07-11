@@ -22,13 +22,34 @@ const routes = [
   {
     path:'/login',
     name: 'Login',
-    component: () => import( '../views/Login.vue')
+    component: () => import(/* webpackChunkName: "about" */'../views/Login.vue')
   },
   {
     path:'/profil',
     name: 'Profil',
-    component: () => import( '../views/Profil.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Profil.vue')
   },
+  {
+    path:'/messages',
+    name:'Messages',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Messages.vue')
+  },
+  {
+    path:'/messages',
+    name:'OneMessage',
+    component: () => import(/* webpackChunkName: "about" */ '../views/OneMessage.vue')
+  },
+  {
+    path:'/users',
+    name:'Users',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Users.vue')
+  },
+  {
+    path:'/users/:id',
+    name:'OneUser',
+    component: () =>  import(/* webpackChunkName: "about" */ '../views/OneUser.vue')
+  }
+
     
 ]
 

@@ -2,54 +2,36 @@
   <div class="home">
    
     <Header/>
+
+    <section> 
+      <h1> Bienvenue chez Groupania</h1>
+        <h2> Inscrivez-vous ou connectez-vous  </h2>
+          <p>afin de pouvoir rejoindre notre réseau social et pouvoir partager vos idées, vos photos et bien plus encore !</p>
+      <img src="../assets/Groupomania_logo_red.png" alt="photo du logo" >
+    </section>
+    <Footer/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Header from '@/components/Header.vue'
+import Header from '../components/Header.vue';
+import Footer from "../components/Footer.vue";
 
 export default {
   name: 'Home',
   components: {
-   Header
+   Header,
+   Footer,
   }
 }
 </script>
  
- <style scoped lang="scss">
+ <style lang="scss" scoped>
 
-  nav {
+ img {
+   height: 280px; 
+   width: 280px
+ }
 
-    display:flex;
-
-      .logo {
-        width: 70%
-      }
-      .auth {
-        width   : 30%;
-        display : flex;
-        justify-content: space-around;
-       
-        button {
-         height: 40px;
-         width : 100px;
-         font-weight: bolder;
-
-          .router-link {
-            color: rgb(204, 190, 190);
-            text-decoration: none;
-         
-          }
-         
-         
-
-         
-        }  
-       
-      }
-  }
-   
-
-</style>
- 
+ </style>

@@ -30,22 +30,18 @@
 <style scoped lang="scss">
 
    nav {
-    height: 200px;
-    justify-content: space-evenly;
+        height: 200px;
+        justify-content: space-evenly;
   }     
        
-
-        .infos {
-           
+        .infos {          
             width          : 50%;
             display        : flex;                                
             text-align     : center;
-            flex-direction : column;
-                       
+            flex-direction : column;                       
         }
 
-        h4 {             
-                       
+        h4 {                                    
             font-weight    : bold;
             font-size      : 1.2em;
             color          : rgb(167, 8, 8);
@@ -61,6 +57,7 @@
             color          : white;
             text-decoration: none
         }
+
     ul {
         padding:0
     }

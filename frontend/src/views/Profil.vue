@@ -1,7 +1,7 @@
 <template>
     <main>
         <Header/>
-            
+            <Menu/>
                 <h1> Votre profil </h1> 
                     <h2> Vos informations </h2>
                         <p> Vous pouvez supprimer ou modifier vos <br> 
@@ -27,12 +27,6 @@
                                 </a>
                             </div>
                         </section>
-       
-        
-
-
-        
-
         <Footer/>
 
     </main>
@@ -41,13 +35,13 @@
 <script>
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-//import Menu from "../components/Menu"
+import Menu from "../components/Menu"
 import axios from "axios";
 export default {
     name: "Profil",
     components: {
         Header,
-       // Menu,
+        Menu,
         Footer              
 },
 data() {
@@ -130,9 +124,9 @@ p {
 }
 .profil_user {
     display: flex;
-    border: 2px solid white;
+    border: 2px solid rgb(134, 9, 9);
     padding: 20px;
-    color: white;
+    color: rgb(102, 19, 19);
 }
 .pseudo {
     width: 15%;   
