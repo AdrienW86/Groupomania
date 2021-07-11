@@ -10,7 +10,7 @@ const userCtrl = require('./controllers/usersCtrl');
 // Users routes
 
 router.post('/admin/', userCtrl.admin);
-router.post('/signup/', userCtrl.signup);
+router.post('/sign/', userCtrl.sign);
 router.post('/login/',userCtrl.login);
 router.get('/users/', userCtrl.getAllUsers);
 router.get('/users/:id',userCtrl.getOneUser);

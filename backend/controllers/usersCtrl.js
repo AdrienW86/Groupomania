@@ -59,7 +59,7 @@ exports.admin = (req, res, next) => {
 
 // Création des utilisateurs
 
-exports.signup = (req, res, next) => {
+exports.sign = (req, res, next) => {
 
     let email     = req.body.email;
     let password  = req.body.password;
