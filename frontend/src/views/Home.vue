@@ -7,7 +7,7 @@
       <h1> Bienvenue chez Groupania</h1>
         <h2> Inscrivez-vous ou connectez-vous  </h2>
           <p>afin de pouvoir rejoindre notre réseau social et pouvoir partager vos idées, vos photos et bien plus encore !</p>
-      <img src="../assets/Groupomania_logo_red.png" alt="photo du logo" >
+     
     </section>
     <Footer/>
   </div>
