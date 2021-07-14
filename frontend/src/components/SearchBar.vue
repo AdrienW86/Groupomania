@@ -1,9 +1,7 @@
 <template>
      <section>
-        <h3> Chercher un message </h3>
-        <input type="search" @keyup="find()" id="find" />
-           
-                    
+        <h3> Rechercher </h3>
+        <input type="search" value="votre recherche" @keyup="find()" id="find" />                 
     </section>
 </template>
 
@@ -40,7 +38,11 @@ h3 {
 
 #find {
   margin-bottom: 20px;
-  width: 50%;
+  width: 200px;
+}
+
+section {
+  background-color: #0275d8;
 }
 
 </style>

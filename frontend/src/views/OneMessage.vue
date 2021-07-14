@@ -39,7 +39,7 @@ export default {
 
    mounted () {
    axios
-    .get("http://localhost:8080/api/auth/messages")
+    .get("http://localhost:8080/api/auth/messages",)
     .then((response) => {
       this.messages = response.data;
         for (let i = 0; i < this.messages.length; i++) {         

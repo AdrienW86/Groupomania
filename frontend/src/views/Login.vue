@@ -40,6 +40,7 @@ export default {
         password: "",
         isAdmin: "",
         bio: "",
+        avatar:"",
         createdAt: "",
       },
     err: "",
@@ -53,6 +54,7 @@ login() {
     password : this.userInfos.password,
     isAdmin: this.userInfos.isAdmin,
     bio: this.userInfos.bio,
+    avatar: this.userInfos.avatar,
     createdAt : this.userInfos.createdAt,
     isLog : this.userInfos.isLog,    
   };

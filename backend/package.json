@@ -22,12 +22,14 @@
   "homepage": "https://github.com/AdrienW86/Groupomania#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "helmet": "^4.6.0",
     "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.2",
     "mysql": "^2.18.1",
     "mysql2": "^2.2.5",
-    "sequelize": "^6.6.5"
+    "sequelize": "^6.6.5",
+    "sharp": "^0.28.3"
   }
 }

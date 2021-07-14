@@ -16,6 +16,10 @@ module.exports = {
           key: 'id'
         }
       },
+       username: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       title: {
         allowNull: false,
         type: Sequelize.STRING,
@@ -30,7 +34,7 @@ module.exports = {
       },
       picture: {
         allowNull: true,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,

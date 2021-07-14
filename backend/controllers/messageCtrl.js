@@ -15,18 +15,18 @@ exports.createMessage = (req, res, next) => {
 
     let headerAuth = req.headers['authorization'];
     let userId     = jwt.getUserId(headerAuth);
-
     let title      = req.body.title;
     let content    = req.body.content;
-    let picture    = req.body.picture;
-    if (req.file) {
+    let username   = req.body.username;
+    let picture    = req.body.picture
+    if(req.file) {
         picture = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
     }
     if (title == null || content == null) {
         return res.status(400).json({ 'erreur': "paramètres manquants" });
     }
     if (title.length <= TITLE_LIMIT || content.length <= CONTENT_LIMIT) {
-        return res.status(400).json({ 'erreur': "paramètres invalides" });
+       return res.status(400).json({ 'erreur': "paramètres invalides" });
     }
     models.User.findOne({
         where: { id: userId }
@@ -34,20 +34,21 @@ exports.createMessage = (req, res, next) => {
     .then(userFound => {
         if(userFound) {
             models.Message.create({
-                title  : title,
-                content: content,
-                picture: picture,
-                likes  : 0,
-                UserId : userFound.id
+                title   : title,
+                content : content,
+                picture : picture,
+                username: username,
+                likes   : 0,
+                UserId  : userFound.id
             })
             .then(newMessage => {
                 if (newMessage) {
                     return res.status(201).json(newMessage);
                 }else{
-                    return res.status(500).json({ 'erreur': "impossible de publier le message" });
+                    return res.status(500).json({ 'erreur': "impossible de publier le message" });                   
                 }
             });
-        }else{
+        }else{ 
             res.status(404).json({ 'erreur': "utilisateur introuvable" });
         }
     })
@@ -59,41 +60,20 @@ exports.createMessage = (req, res, next) => {
 // Modification d'un message
 
 exports.updateMessage = (req, res, next) => {
-
-    let headerAuth       = req.headers['authorization'];
-    
-    let title            = req.body.title;
-    let content          = req.body.content;
-    let picture          = req.body.picture;
-    
-
-    models.Message.findByPk(req.params.id)
-        
-    .then(messageFound =>{
-        if(messageFound) {
-            messageFound.update({
-                title  : (title   ? title   : messageFound.title),
-                content: (content ? content : messageFound.content),
-                picture: (picture ? picture : messageFound.picture)
-            }).then(messageFound => {
-                if (messageFound) {
-                    return res.status(201).json(messageFound);
-                }else{
-                    return res.status(500).json({ 'ereur': "la mise à jour du message à échouée"})
-                }
-            }).catch(err => {
-                res.status(500).json(err)
-            })
-        }else{
-            res.status(404).json({ 'erreur': "message introuvable"})
-        }
-    }).catch(err => {
-        return res.status(500).json(err)
-    });
-}
-
-
-
+    let  messageId = req.params.id;
+   
+    models.Message.update(
+        { where: {id: messageId }})
+        .then(messageFound => {
+            if(messageFound == 1) {
+                res.status(200).json({ 'message': "Le message a bien été supprimé"})
+            }else{
+                res.status(404).json({ 'erreur': " Le message n'a pas été supprimé"})
+            }
+        }).catch(err=> {
+           res.status(500).json({err}) 
+        })
+    }
 // Suppression d'un message
 
 exports.deleteMessage =(req, res, next) => {
@@ -102,7 +82,7 @@ exports.deleteMessage =(req, res, next) => {
     models.Message.destroy(
         { where: {id: messageId }})
         .then(messageFound => {
-            if(messageFound ==1) {
+            if(messageFound == 1) {
                 res.status(200).json({ 'message': "Le message a bien été supprimé"})
             }else{
                 res.status(404).json({ 'erreur': " Le message n'a pas été supprimé"})
@@ -111,8 +91,6 @@ exports.deleteMessage =(req, res, next) => {
            res.status(500).json({err}) 
         })
 }
-
-
 
 // Afficher la liste des messages
 

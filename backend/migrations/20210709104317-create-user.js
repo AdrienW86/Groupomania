@@ -14,7 +14,7 @@ module.exports = {
       },
       username: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       email: {
         allowNull: false,
@@ -26,7 +26,7 @@ module.exports = {
       },
       avatar: {
         allowNull: true,
-        type: Sequelize.STRING
+        type: Sequelize.STRING, 
       },
       bio: {
         allowNull: true,

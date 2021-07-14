@@ -1,12 +1,16 @@
-// Import
+// Import 
 
 const express = require('express');
 const userRoutes = require('./router');
 const helmet = require('helmet');
+let cors = require('cors');
+const path = require('path');
 
 // Instances
 
 const app = express();
+
+app.use(cors())
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -16,8 +20,9 @@ app.use((req, res, next) => {
   });
 
 app.use(express.json()); 
-app.use(express.urlencoded({ extended: true })); //Parse URL-encoded bodies
-app.use(helmet());                               // Protection contre les injections SQL et XMS
+app.use(express.urlencoded({extended:true})); //Parse URL-encoded bodies
+app.use(helmet());             // Protection contre les injections SQL et XMS
+app.use("/images",express.static(path.join(__dirname, 'images')));
 
 module.exports = app;
 
