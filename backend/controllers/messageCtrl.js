@@ -18,6 +18,7 @@ exports.createMessage = (req, res, next) => {
     let title      = req.body.title;
     let content    = req.body.content;
     let username   = req.body.username;
+    let isAdmin    = req.body.isAdmin;
     let picture    = req.body.picture
     if(req.file) {
         picture = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
@@ -39,7 +40,8 @@ exports.createMessage = (req, res, next) => {
                 picture : picture,
                 username: username,
                 likes   : 0,
-                UserId  : userFound.id
+                UserId  : userFound.id,
+                isAdmin : isAdmin
             })
             .then(newMessage => {
                 if (newMessage) {

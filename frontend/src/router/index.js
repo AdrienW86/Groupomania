@@ -30,9 +30,19 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Profil.vue')
   },
   {
+    path:'/profil-modify',
+    name: 'ProfilModify',
+    component: () => import(/* webpackChunkName: "about" */ '../views/ProfilModify.vue')
+  },
+  {
     path:'/messages',
     name:'Messages',
     component: () => import(/* webpackChunkName: "about" */ '../views/Messages.vue')
+  },
+  {
+    path:'/new-message',
+    name:'NewMessage',
+    component: () => import(/* webpackChunkName: "about" */ '../views/NewMessage.vue')
   },
   {
     path:'/messages/:id',

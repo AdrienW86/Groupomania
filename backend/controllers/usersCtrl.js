@@ -67,10 +67,14 @@ exports.sign = (req, res, next) => {
     let bio       = req.body.bio;
     let avatar    = req.body.avatar
     
+    if(req.file) {
+        avatar = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
+    }
+
     if (email == null || username == null || password == null) {
         return res.status(400).json({ 'erreur': "paramètres manquants "});
     }
-
+    
     if (!REGEX_EMAIL.test(email)) {
         return res.status(400).json({ 'erreur': "email incorrect" });
     }
@@ -101,13 +105,15 @@ exports.sign = (req, res, next) => {
                         'userId': newUser.id
                     })
                 })
-                .catch(err => {
-                    return res.status(500).json({ 'erreur': " impossible d'ajouter l'utilisateur " });
+                .catch(err => {                   
+                   return res.status(500).json({ 'erreur': " impossible d'ajouter l'utilisateur " });
                 });
             });
          }else{
-            return res.status(409).json({ 'erreur': "l'utilisateur existe déjà "});
+             res.status(409).json({message: "l'utilisateur existe déjà"});
         }
+           
+           
     })
     .catch(function(err) {
         return res.status(500).json({ 'erreur': "impossible de vérifier l'utilisateur "});

@@ -1,114 +1,144 @@
 <template>
-
   <div class="sign">
-     <Header/>
+    <Header />
 
-     <h1> Créer un compte </h1>
+    <h1>Créer un compte</h1>
 
-      <form id="signup">
+    <form id="checkForm">
+      <label for="username"> Entrer votre pseudo </label>
 
-        <label for="username"> Entrer votre pseudo </label>
-          <input v-model="userInfos.username" name="username"  class="username" required>
+      <input
+        id="username"
+        placeholder="Votre pseudo"
+        v-model="username"
+        name="username"
+        type="text"
+        class="username"
+        required
+      />
 
-        <label for="email"> Entrer votre adresse mail </label>
-          <input v-model="userInfos.email" name="email"  class="email" required> 
+      <label for="email"> Entrer votre adresse mail </label>
+      <input
+        id="email"
+        placeholder="Votre email"
+        v-model="email"
+        name="email"
+        type="email"
+        class="email"
+        required
+      />
 
-        <label for="password"> Entrer votre mot de passe </label>
-           <input v-model="userInfos.password" name="password"  class="password" required>
+      <label for="password"> Entrer votre mot de passe </label>
+      <input
+        v-model="password"
+        id="password"
+        placeholder="(6 caractères minimum)"
+        name="password"
+        type="password"
+        class="password"
+        minlength="6"
+        required
+      />
 
-            <button id='sign_btn' type="submit" @click.stop.prevent="sign()"> Valider </button>
-      </form>
-      <Footer/>
-    </div> 
-       
+      <input
+        id="sign_btn"
+        type="submit"
+        class="btn btn-primary"
+        @click="Sign()"
+      />
+    </form>
+    <Footer />
+  </div>
 </template>
 
 <script>
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import axios from 'axios';
+import axios from "axios";
 export default {
-  name: 'Sign',
+  name: "Sign",
   components: {
     Header,
-    Footer
+    Footer,
   },
   data() {
     return {
-        userInfos : {
-        email: "",
-        username: "",
-        password: "",
-        bio:"",
-      }
-    }
+      email: null,
+      username: null,
+      password: "",
+      bio: "",
+      avatar: "",
+    };
   },
   methods: {
-    sign () {
+    Sign() {
       const userData = {
-      email : this.userInfos.email,
-      username: this.userInfos.username,
-      password : this.userInfos.password,
-      bio : this.userInfos.bio
+        email: this.email,
+        username: this.username,
+        password: this.password,
+        bio: this.bio,
+        avatar: this.avatar,
       };
-      if( userData.email == null || userData.username == null || userData.password == null) {
-        alert('Saisies invalides')
-    
-      }else{
-        window.location.href ="/#/login"
+
+      if (
+        userData.email == null ||
+        userData.username == null ||
+        userData.password == null
+      ) {
+        window.confirm("Vous devez remplir tous les champs");
+      } else if (userData.password.length < 6){
+         window.alert("Votre mot de passe doit contenir 6 caractères minimum")
+        
+      }
+      else {
         axios
           .post("http://localhost:8080/api/auth/sign", userData)
           .then((response) => {
-            if(response) {
-             
-              console.log(response.data.userId)
-              
-            }else{
-            alert("données invalides")
-          }
-        }).catch((err) => console.log(err));
-      } 
-    }
-  }
-}
+            if (response) {
+              alert("Votre profil a bien été enregistré");
+              console.log(response.data.userId);
+              window.location.href = "/#/login";
+            } else {
+              alert("données invalides");
+            }
+          })
+          .catch((err) => console.log(err));
+      }
+    },
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-
 h1 {
-  color         :#30289e;
+  color: #30289e;
+  margin-top: 60px;
 }
 
-#signup {
-  display       : flex;
+#checkForm {
+  display: flex;
   flex-direction: column;
-  margin        : auto;
-  width         : 200px;
-   
-  input {
-    margin-top        : 10px;
-    margin-bottom     : 10px;
-    height            : 20px;
-    width             : 200px;
-    color             : black;
-  }
+  margin: auto;
+  width: 200px;
+  margin-top: 60px;
+  margin-bottom: 250px;
+  justify-content: center;
 
-  button {
-    margin-top        : 20px;
-    margin-right      : 50px;
-    margin-left       : 50px;
-    margin-bottom     : 30px;
-    width             : 100px;
-    height            : 30px;
-    border-radius     : 10px;
-    background-color  :#2418cf;
-    color             :whitesmoke;
-    font-weight       : bold;
-      &:hover {
-            transform: scale(1.1);
-            
-    }
+  input {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 20px;
+    width: 200px;
+    color: black;
+  }
+  #sign_btn {
+    color: white;
+    width: 140px;
+    height: 40px;
+    position: relative;
+    left: 30px;
+    top: 40px;
   }
 }
 </style>

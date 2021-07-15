@@ -1,16 +1,26 @@
 <template>
      <div class="message-infos">
          <h1> Derniers messages publiés </h1>
+
+         <button type="btn" class="btn btn-success"> 
+           <router-link to="/new-message"> Envoyer un message 
+           </router-link> 
+           </button>
              <li class="list" v-for="message in messages" :key="message.id">
                  <div class="card">
-                   {{message.username}}
+                  <div class="admin" v-if="message.isAdmin == true">
+                      <h5> {{message.username}} </h5>
+                  </div>
+                  <div class="membre" v-else-if="message.isAdmin == false">
+                      <h5> {{message.username}} </h5>
+                  </div>                
                    <div class="image_message">
                       <img :src="message.picture" 
                             class="card-img-top"  alt="photo_message"> 
                    </div>
                         <div class="card-body">
                             <h5 class="card-title">
-                                {{message.title}} {{message.id}} 
+                                {{message.title}} 
                             </h5>
                             <p class="card-text">
                                 {{message.content}}
@@ -76,6 +86,11 @@ h1 {
   margin           : 30px
 }
 
+h5 {
+  font-weight: bold;
+  font-style: italic;
+}
+
 li {
     list-style     : none;
     display        : flex; 
@@ -101,4 +116,19 @@ img {
   height: 200px;
 }
 
+a {
+  color:white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.admin {
+    color:red;
+    
+}
+
+.membre {
+    color:green;
+    
+}
 </style>
