@@ -25,9 +25,17 @@
                             <p class="card-text">
                                 {{message.content}}
                             </p>
-                            <button type="button"
-                            class="btn btn-primary" 
-                            v-on:click.capture="getOneMessage()">Voir le message</button>
+                                {{message.createdAt}} 
+                            <button type="button" 
+                                    class="btn btn-success"
+                                    @click="Like()"> like</button> 
+                <span id="like"> {{message.likes}} </span>
+
+                            <button type="button" class="btn btn-danger"> dislike </button>
+
+                            <button type="button" 
+                                    class="btn btn-primary"
+                                    v-on:click.capture="getOneMessage()">Voir le message</button>
                         </div>
                  </div>
              </li>              
@@ -46,10 +54,19 @@ export default {
       messages    : [], 
       isUserLogged: "",  
       isAdmin     : "",  
+      
     }
   },  
 
   methods: {
+    
+
+
+    Like() {
+      
+      
+      
+    },
 
     getOneMessage() {
       
@@ -130,5 +147,9 @@ a {
 .membre {
     color:green;
     
+}
+
+span{
+  color: red
 }
 </style>

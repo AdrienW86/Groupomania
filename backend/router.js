@@ -2,10 +2,10 @@
 
 const express = require('express');
 const router = express.Router();
-const multer = require('./middleware/multer-config')
+const multer = require('./middleware/multer-config');
 const messageCtrl = require('./controllers/messageCtrl');
 const userCtrl = require('./controllers/usersCtrl');
-//const likesCtrl = require('../controllers/likesCtrl');
+const likeCtrl = require('./controllers/likeCtrl');
 
 // Users routes
 
@@ -24,12 +24,11 @@ router.post('/messages/new/', multer, messageCtrl.createMessage);
 router.get('/messages/', messageCtrl.listMessage);
 router.get('/messages/:id', messageCtrl.getOneMessage);
 router.delete('/messages/:id/', messageCtrl.deleteMessage); 
-router.put('messages/:id/', multer, messageCtrl.updateMessage);     // à finaliser
 
 // Likes
 
-//router.post('/messages/:messageId/vote/like',likesCtrl.likePost);       // à voir avec le client
-//router.post('/messages/:messageId/vote/dislike',likesCtrl.dislikePost);
+router.post('/messages/:id/like', likeCtrl.like);      
+router.post('/messages/:id/dislike',likeCtrl.dislike);
 
    
 module.exports = router;

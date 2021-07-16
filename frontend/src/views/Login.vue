@@ -33,7 +33,7 @@
         name="password"
         type="password"
         class="password"
-        minlength="6"
+        minlength="5"
         required
       />
 

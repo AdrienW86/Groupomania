@@ -40,8 +40,9 @@ exports.createMessage = (req, res, next) => {
                 picture : picture,
                 username: username,
                 likes   : 0,
+                dislikes: 0,
                 UserId  : userFound.id,
-                isAdmin : isAdmin
+                isAdmin : isAdmin,
             })
             .then(newMessage => {
                 if (newMessage) {
@@ -59,23 +60,6 @@ exports.createMessage = (req, res, next) => {
     });
 }
 
-// Modification d'un message
-
-exports.updateMessage = (req, res, next) => {
-    let  messageId = req.params.id;
-   
-    models.Message.update(
-        { where: {id: messageId }})
-        .then(messageFound => {
-            if(messageFound == 1) {
-                res.status(200).json({ 'message': "Le message a bien été supprimé"})
-            }else{
-                res.status(404).json({ 'erreur': " Le message n'a pas été supprimé"})
-            }
-        }).catch(err=> {
-           res.status(500).json({err}) 
-        })
-    }
 // Suppression d'un message
 
 exports.deleteMessage =(req, res, next) => {

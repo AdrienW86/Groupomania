@@ -3,7 +3,7 @@
 const express = require('express');
 const userRoutes = require('./router');
 const helmet = require('helmet');
-let cors = require('cors');
+const cors = require('cors');
 const path = require('path');
 
 // Instances
@@ -22,6 +22,7 @@ app.use((req, res, next) => {
 app.use(express.json()); 
 app.use(express.urlencoded({extended:true})); //Parse URL-encoded bodies
 app.use(helmet());             // Protection contre les injections SQL et XMS
+
 app.use("/images",express.static(path.join(__dirname, 'images')));
 
 module.exports = app;

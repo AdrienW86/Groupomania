@@ -111,9 +111,7 @@ exports.sign = (req, res, next) => {
             });
          }else{
              res.status(409).json({message: "l'utilisateur existe déjà"});
-        }
-           
-           
+        }                     
     })
     .catch(function(err) {
         return res.status(500).json({ 'erreur': "impossible de vérifier l'utilisateur "});
@@ -145,7 +143,6 @@ exports.login = (req, res, next) => {
                         'username': userFound.username,
                         'avatar'  : userFound.avatar,
                         'isLog'   : +1
-
                     });
                 }else{
                     return res.status(403).json({ 'erreur': "mot de passe invalide" });

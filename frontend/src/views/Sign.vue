@@ -86,7 +86,7 @@ export default {
         userData.password == null
       ) {
         window.confirm("Vous devez remplir tous les champs");
-      } else if (userData.password.length < 6){
+      } else if (userData.password.length < 5){
          window.alert("Votre mot de passe doit contenir 6 caractères minimum")
         
       }
