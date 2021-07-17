@@ -12,7 +12,7 @@
                       <h5> {{message.username}} </h5>
                   </div>
                   <div class="membre" v-else-if="message.isAdmin == false">
-                      <h5> {{message.username}} </h5>
+                      <h5> {{message.username}} {{message.id}}</h5>
                   </div>                
                    <div class="image_message">
                       <img :src="message.picture" 
@@ -26,16 +26,19 @@
                                 {{message.content}}
                             </p>
                                 {{message.createdAt}} 
-                            <button type="button" 
+                            <button 
+                                    type="button" 
                                     class="btn btn-success"
-                                    @click="Like()"> like</button> 
-                <span id="like"> {{message.likes}} </span>
-
-                            <button type="button" class="btn btn-danger"> dislike </button>
-
+                                    @click="Like(message.id)">like</button> 
+                                         <span id="like" class="like"> {{message.likes}} </span>
+                            <button 
+                                    type="button"
+                                    class="btn btn-danger"
+                                    @click="Dislike(message.id)"> dislike </button>
+                                          <span id="dislike" class="like"> {{message.dislikes}} </span>
                             <button type="button" 
                                     class="btn btn-primary"
-                                    v-on:click.capture="getOneMessage()">Voir le message</button>
+                                    @click="getOneMessage(message.id)">Voir le message</button>
                         </div>
                  </div>
              </li>              
@@ -53,22 +56,40 @@ export default {
     return {
       messages    : [], 
       isUserLogged: "",  
-      isAdmin     : "",  
+      isAdmin     : "",
       
     }
-  },  
-
+  }, 
+  
   methods: {
     
-
-
-    Like() {
+    Like(id) {
       
+      console.log(id)
+      axios.post("http://localhost:8080/api/auth/messages/like/"+id,{
+            headers: { Authorization: "Bearer " + localStorage.getItem("key") },
+            })
+      .then((response) => {
+      console.log(response)
+      }).catch(err => {
+        console.log(err)
+      })     
+    },
+
+    Dislike(id) {
       
+      axios.post("http://localhost:8080/api/auth/messages/dislike/"+id
+      )  
+      .then((response) => {
+      console.log(response)
+      }).catch(err => {
+        console.log(err)
+      })
       
     },
 
-    getOneMessage() {
+    getOneMessage(id) {
+      alert(id)
       
     },
 
@@ -77,9 +98,10 @@ export default {
 
   mounted () {
    axios
-    .get("http://localhost:8080/api/auth/messages/")
+    .get("http://localhost:8080/api/auth/messages/",)
     .then((response) => {
       this.messages = response.data;
+      
         for (let i = 0; i < this.messages.length; i++) {         
           this.messages[i].createdAt = this.messages[i].createdAt.replace("T", " à ");
           this.messages[i].createdAt = this.messages[i].createdAt.replace(".000Z",""); 
@@ -149,7 +171,12 @@ a {
     
 }
 
-span{
+.likes {
+  color: green
+}
+
+.dislikes {
   color: red
 }
+
 </style>

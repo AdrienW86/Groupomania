@@ -25,10 +25,10 @@ router.get('/messages/', messageCtrl.listMessage);
 router.get('/messages/:id', messageCtrl.getOneMessage);
 router.delete('/messages/:id/', messageCtrl.deleteMessage); 
 
-// Likes
+// Likes routes
 
-router.post('/messages/:id/like', likeCtrl.like);      
-router.post('/messages/:id/dislike',likeCtrl.dislike);
+router.post('/messages/like/:id/', likeCtrl.like);      
+router.post('/messages/dislike/:id/',likeCtrl.dislike);
 
-   
+// Comment routes
 module.exports = router;
