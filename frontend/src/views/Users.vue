@@ -1,12 +1,10 @@
 <template>
     <main>
-   <Header/>
-   <Menu/>
-   <SearchBar/>
-  <ListUser/>
-
-    <Footer/>
-  
+      <Header/>
+        <Menu/>
+         <SearchBar/>
+            <ListUser/>
+              <Footer/>  
     </main>
   
 </template>

@@ -91,10 +91,11 @@ export default {
       if (this.user.bio == null && this.user.avatar == null) {
         window.alert("Champs vides");
       } else {
-      const userData = {
-        bio :this.user.bio,
-        avatar : this.user.file
-      }
+
+      const userData = new FormData() 
+       userData.append("bio" ,this.user.bio,) 
+       userData.append("image", this.file)
+      
     
       
       console.log(this.file);
@@ -102,7 +103,7 @@ export default {
       axios
         .put("http://localhost:8080/api/auth/profil", userData, {
           headers: {
-           'Content-Type': 'application/json', Authorization: "Bearer " + localStorage.getItem("key"),
+           'Content-Type': 'multipart/form-data' , Authorization: "Bearer " + localStorage.getItem("key"),
           },
         })
         .then((response) => {

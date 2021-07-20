@@ -189,7 +189,7 @@ exports.updateUserProfil = (req, res, next) => {
     let userId           = jwt.getUserId(headerAuth);
     let password         = req.body.password;
     let bio              = req.body.bio;
-    let avatar           = req.body.avatar;
+    let avatar           = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     let username         = req.body.username;
 
     models.User.findOne({

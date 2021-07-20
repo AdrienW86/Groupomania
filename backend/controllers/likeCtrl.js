@@ -1,88 +1,163 @@
-// Import
-
 const models = require('../models/');
 const jwt = require('../middleware/jwt.utils');
 
 exports.like = (req, res, next) => {
 
-    let  messageId = req.params.id;
+  let messageId = req.params.id;
+  let headerAuth = req.headers['authorization'];
+  let userId     = jwt.getUserId(headerAuth);
 
     models.Message.findOne({
         where: { id:messageId }
-    })
-        .then(messageFound => {
-            if (messageFound) {
-                models.Message.findOne({
-                    attributes: ['id', 'likes', 'dislikes','username'],
-                    where: { id: messageId}
 
-                }).then(messageFound => {
+    }).then(messageFound => {
+        if(messageFound) {
 
-                    if (messageFound) {
+          models.User.findOne({
+            where: {id :userId}
 
-                        messageFound.increment('likes', {
-                            where: { id: messageId }
+          }).then(userFound=> {
+              if(userFound) {
 
-                        }).then(messageFound => {
-                            if (messageFound) {
-                                return res.status(201).json(messageFound);
+               models.Like.create({
+                messageId: messageId,
+                userId : userId,
+                isLike: 1,
+                isDislike: 0
 
-                            } else {
-                                return res.status(400).json(messageFound);
+                  }).then(createdLike => {
+                        if(createdLike){
+
+                          models.Like.findOne({
+                            where: {
+                              userId: userId,
+                              messageId: messageId
                             }
-                        })
-                    } else {
-                        res.status(404).json({ erreur: " message introuvable" })
-                    }
-                }).catch(err => {
-                    res.status(404).json({ erreur: " utilisateur introuvableuuuu" })
-                })
-            } else {
-                res.status(404).json({ erreur: " utilisateur introuvableoo" })
-            }
-        }).catch(err => {
-            res.status(404).json({ erreur: " utilisateur introuvablemmm" })
-        })
-}
+                          
+ 
+                           }).then(likeFound => {
+                             if(likeFound) {
 
+                              messageFound.update({
+                                likes: messageFound.likes + 1 
+
+                              }).then(messageUpdated => {
+                                  if(messageUpdated) {
+
+                              return res.status(201).json(newLike)
+
+                                  }else{
+
+                               res.status(401).json({ erreur: "le message n'as pas pu être mis à jour"})
+                             }
+
+                           }).catch(err=> {
+                             res.status(401).json({ erreur: "impossible de mettre le message à jour"})
+                           })
+ 
+                        }else {
+
+                        }
+                }).catch(err=> {
+                    res.status(401).json({ erreur: " mettre le message à jour"})
+                })                                         
+            
+              }else {
+                res.status(404).json({ erreur: "impossible de trouver l'utilisateur"})
+              }
+          }).catch(err=> {
+            res.status(404).json({ erreur: "utilisateur introuvable"})
+          })
+
+        }else{
+          res.status(404).json({ erreur: "impossible de trouver le message"})
+        }
+    }).catch(err=> {
+      res.status(404).json({ erreur: "message introuvable"})
+    })
+}else{
+
+}
+}).catch( err=> {
+  res.status(404).json({ erreur: "message introuvable"})
+    
+})
+}
 exports.dislike = (req, res, next) => {
 
-    let  messageId = req.params.id;
+  let messageId = req.params.id;
+  let headerAuth = req.headers['authorization'];
+  let userId     = jwt.getUserId(headerAuth);
 
     models.Message.findOne({
         where: { id:messageId }
-    })
-        .then(messageFound => {
-            if (messageFound) {
-                models.Message.findOne({
-                    attributes: ['id', 'likes', 'dislikes','username'],
-                    where: { id: messageId}
 
-                }).then(messageFound => {
+    }).then(messageFound => {
+        if(messageFound) {
 
-                    if (messageFound) {
+          models.User.findOne({
+            where: {id : userId}
 
-                        messageFound.increment('dislikes', {
-                            where: { id: messageId }
+          }).then(userFound => {
+              if( userFound) {
 
-                        }).then(messageFound => {
-                            if (messageFound) {
-                                return res.status(201).json(messageFound);
+                models.Like.findOne({
+                  where: {
+                    userId: userId,
+                    messageId: messageId
+                  }
 
-                            } else {
-                                return res.status(400).json(messageFound);
+                }).then(likeFound =>{
+                    if(likeFound) {
+
+                      likeFound.update({
+                        isLike: -1
+
+                      }).then(likeUpdated =>{
+                        if(likeUpdated) {
+
+                          messageFound.update({
+                           dislikes: messageFound.dislikes + 1 
+
+                          }).then(messageUpdated => {
+                            if(messageUpdated) {
+
+                              return res.status(201).json(newLike)
+
+                            }else{
+                              res.status(401).json({ erreur: "le message n'as pas pu être mis à jour"})
                             }
-                        })
-                    } else {
-                        res.status(404).json({ erreur: " message introuvable" })
-                    }
+                          }).catch(err=> {
+                            res.status(401).json({ erreur: "impossible de mettre le message à jour"})
+                          })
+
+                        }else{
+                          res.status(401).json({ erreur: "le like n'as pas pu être mis à jour"})
+                        }
+
+                      }).catch(err => {
+                        res.status(404).json({ erreur: "like introuvable"})
+                      })
+
+                  }else{
+                    res.status(404).json({ erreur: "impossible de trouver le like"})
+                  }
+
                 }).catch(err => {
-                    res.status(404).json({ erreur: " utilisateur introuvableuuuu" })
+                  res.status(404).json({ erreur: "like introuvable"})
                 })
-            } else {
-                res.status(404).json({ erreur: " utilisateur introuvableoo" })
-            }
-        }).catch(err => {
-            res.status(404).json({ erreur: " utilisateur introuvablemmm" })
-        })
+
+              }else {
+                res.status(404).json({ erreur: "impossible de trouver l'utilisateur"})
+              }
+          }).catch(err=> {
+            res.status(404).json({ erreur: "utilisateur introuvable"})
+          })
+
+        }else{
+          res.status(404).json({ erreur: "impossible de trouver le message"})
+        }
+    }).catch(err=> {
+      res.status(404).json({ erreur: "message introuvable"})
+    })
 }

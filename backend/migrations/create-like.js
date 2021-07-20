@@ -4,9 +4,9 @@ module.exports = {
     await queryInterface.createTable('Likes', {
       id: {
         allowNull: false,
-        type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
+        type: Sequelize.INTEGER,
         
       },
       messageId: {
@@ -25,11 +25,11 @@ module.exports = {
         key: 'id'
         }
       },
-      like : {
+      isLike : {
         allowNull: false,
-        type: Sequelize.INTEGER,     
+        type: Sequelize.INTEGER,
       },
-      dislike : {
+      isDislike : {
         allowNull: false,
         type: Sequelize.INTEGER,
       },

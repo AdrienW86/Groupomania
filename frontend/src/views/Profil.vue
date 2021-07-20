@@ -9,7 +9,7 @@
       informations en cliquant sur les icônes
     </p>
     <section>
-      <div class="card" style="width: 18rem">
+      <div class="card">
         <img :src="users.avatar" alt="Card image cap" />
         <div class="card-body">
           <h5 class="card-title">{{ users.username }}</h5>
@@ -128,6 +128,8 @@ section {
 
 .card {
   margin-bottom: 50px;
+  height: 600px;
+  width: 80%
 }
 
 span {

@@ -81,9 +81,13 @@ exports.deleteMessage =(req, res, next) => {
 // Afficher la liste des messages
 
 exports.listMessage = (req, res, next) => {
-    
-    models.Message.findAll()       
-        .then(messages => {       
+     
+    models.Message.findAll({ 
+        order: [
+        ["createdAt", "DESC"]
+        ] 
+    }) 
+     .then(messages => {                        
         res.status(200).json(messages);
             
         }).catch(err => {
@@ -103,3 +107,5 @@ exports.getOneMessage = (req, res, next) => {
         res.status(500).json({ 'erreur': "impossible d'afficher le message"})
     })
 }
+
+

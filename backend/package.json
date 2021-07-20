@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/AdrienW86/Groupomania#readme",
   "dependencies": {
+    "async": "^3.2.0",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",

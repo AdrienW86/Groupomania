@@ -3,7 +3,7 @@
     <Header/>
     <Menu/>
     <div class="message-infos">
-         <h1> mes messages </h1>
+         <h1> Message de :  </h1>
              <li class="list" v-for="message in messages" :key="message.id">
                  <div class="card" style="width: 28rem;">
                     <img class="card-img-top"  alt="Card image cap">{{message.picture}}
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import axios from "axios"
+//import axios from "axios"
 import Header from "../components/Header.vue"
 import Menu from "../components/Menu.vue"
 import Footer from "../components/Footer.vue"
@@ -37,18 +37,14 @@ export default {
        Footer
    },
 
-   mounted () {
-   axios
-    .get("http://localhost:8080/api/auth/messages",)
-    .then((response) => {
-      this.messages = response.data;
-        for (let i = 0; i < this.messages.length; i++) {         
-          this.messages[i].createdAt = this.messages[i].createdAt.replace("T", " à ");
-          this.messages[i].createdAt = this.messages[i].createdAt.replace(".000Z","");                                 
-        } 
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    },  
+   data() {
+    return {
+      messages: [],
+      
+    };
+   },
 }
+
+
+
+</script>

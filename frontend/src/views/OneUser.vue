@@ -3,7 +3,7 @@
     <Header/>
     <Menu/>
     <div class="message-infos">
-         <h1> mes messages </h1>
+         <h1> Utilisateur </h1>
              <li class="list" v-for="message in messages" :key="message.id">
                  <div class="card" style="width: 28rem;">
                     <img class="card-img-top"  alt="Card image cap">{{message.picture}}

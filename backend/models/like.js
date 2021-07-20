@@ -49,8 +49,15 @@ module.exports = (sequelize, DataTypes) => {
         model:'User',
         key: 'id'
       }
-    }
+    },
+    isLike : {    
+      type: DataTypes.INTEGER,   
+    },
+    isDislike : {    
+      type: DataTypes.INTEGER,   
+    },   
   }, 
+  
   {
     sequelize,
     modelName: 'Like',
