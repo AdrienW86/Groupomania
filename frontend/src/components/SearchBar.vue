@@ -1,7 +1,6 @@
 <template>
      <section>
-        <h3> Rechercher </h3>
-        <input type="search" value="votre recherche" @keyup="find()" id="find" />                 
+        <input type="search" class="search" placeholder="Votre recherche" @keyup="find()" id="find" />                 
     </section>
 </template>
 
@@ -43,6 +42,13 @@ h3 {
 
 section {
   background-color: #0275d8;
+  height: 100px;
+  align-content: center; 
 }
-
+.search {
+  margin-top: 35px
+}
+ ::placeholder {
+text-align: center;
+}
 </style>

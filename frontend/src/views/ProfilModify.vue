@@ -6,7 +6,7 @@
       <form enctype="multipart/form-data">
         <div class="row">
           <div class="col-12 justify-content-center form-group">           
-            <label for="bio_content">Contenu de votre message</label>
+            <label for="bio_content">Contenu de votre présentation</label>
             <textarea
               v-on:keydown="isInvalid = false"
               class="form-control"
@@ -88,13 +88,13 @@ export default {
 
     Modify() {
 
-      if (this.user.bio == null && this.user.avatar == null) {
+      if (this.user.bio == null || this.user.avatar == null) {
         window.alert("Champs vides");
       } else {
 
       const userData = new FormData() 
-       userData.append("bio" ,this.user.bio,) 
-       userData.append("image", this.file)
+      userData.append("bio" ,this.user.bio) 
+      userData.append("image", this.file)
       
     
       

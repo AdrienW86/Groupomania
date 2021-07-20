@@ -2,33 +2,40 @@
   <main>
     <Header />
     <Menu />
-    <h2>Votre profil</h2>
-    <h3>Vos informations</h3>
+    <div class="bar"></div>
+    <h1>Vos informations</h1>
     <p>
       Vous pouvez supprimer ou modifier vos <br />
       informations en cliquant sur les icônes
     </p>
     <section>
       <div class="card">
-        <img :src="users.avatar" alt="Card image cap" />
-        <div class="card-body">
-          <h5 class="card-title">{{ users.username }}</h5>
+      <div class="card-header">
+         <h5 class="card-title">{{ users.username }}</h5>
           <div class="admin" v-if="users.isAdmin == true">Administrateur</div>
           <div class="membre" v-else-if="users.isAdmin == false">Membre</div>
 
+          
+      </div>
+        <div class="card-body">
+          <img :src="users.avatar" alt="Card image cap" />
           <p class="card-text">{{ users.bio }}</p>
         </div>
-        <div class="card-body">
+        <div class="card-footer">
+          
           <span> Créé le: </span> <br />
           {{ users.createdAt }} <br />
           <span> Dernière modification: </span> <br />
           {{ users.updatedAt }} <br />
-          <button type="button" class="btn btn-success">
-            <router-link to="/profil-modify"> Modifier </router-link>
-          </button>
-          <button type="button" class="btn btn-danger" @click="DeleteUser()">
-            Effacer
-          </button>
+          
+          <section class="btn-box">
+            <button type="button" class="btn btn-success">
+              <router-link to="/profil-modify"> Modifier </router-link>
+            </button>
+            <button type="button" class="btn btn-danger" @click="DeleteUser()">
+              Effacer
+            </button>
+          </section>
         </div>
       </div>
     </section>
@@ -112,9 +119,23 @@ a {
   color: white;
 }
 
-h2 {
+h1 {
+  color            : #0275d8;
+  font-weight      : bold;
+  font-style       : italic;
+  margin           : 30px
+}
+
+.bar {
   color: rgb(122, 31, 31);
   background-color: #0275d8;
+  height: 100px
+}
+
+h3 {
+  color: blue;
+  font-weight: bold;
+  margin-top: 20px;
 }
 
 h5 {
@@ -125,18 +146,31 @@ section {
   display: flex;
   justify-content: center;
 }
-
+img {
+  width: 50%;
+  height: 300px;
+}
+p {
+  width: 80%;
+  margin-top: 2%;
+  margin-left: 10%;
+  margin-right: 10%;
+  
+}
 .card {
   margin-bottom: 50px;
-  height: 600px;
+  height: 650px;
   width: 80%
 }
-
 span {
   color: blue;
   font-weight: bold;
 }
 
+.btn-box{
+  display: flex;
+  justify-content: space-evenly;
+}
 .admin {
   color: red;
   font-weight: bold;
