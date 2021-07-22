@@ -141,7 +141,6 @@ exports.login = (req, res, next) => {
                         'token'   : jwt.generateTokenForUser(userFound),
                         'isAdmin' : userFound.isAdmin,
                         'username': userFound.username,
-                        'avatar'  : userFound.avatar,
                         'isLog'   : +1
                     });
                 }else{

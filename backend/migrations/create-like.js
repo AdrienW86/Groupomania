@@ -6,24 +6,15 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
-        
+        type: Sequelize.INTEGER,        
       },
       messageId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references : {
-        model: 'Messages',
-        key: 'id'
-        }
       },
       userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: {
-        model: 'Users',
-        key: 'id'
-        }
       },
       isLike : {
         allowNull: false,

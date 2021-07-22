@@ -33,7 +33,8 @@ module.exports = {
       },
       avatar: {
         allowNull: true,
-        type: Sequelize.STRING, 
+        type: Sequelize.STRING,
+         
       },
       bio: {
         allowNull: true,

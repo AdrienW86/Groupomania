@@ -11,10 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      models.User.hasMany(models.Message,{
+        onDelete: "CASCADE"
+      })
       models.Message.belongsTo(models.User, {
         foreignKey: {
           allowNull: false
-        }
+        },
       })
       
     }
@@ -34,3 +37,4 @@ module.exports = (sequelize, DataTypes) => {
   });
   return Message;
 };
+

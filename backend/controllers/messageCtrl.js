@@ -68,7 +68,7 @@ exports.deleteMessage =(req, res, next) => {
     models.Message.destroy(
         { where: {id: messageId }})
         .then(messageFound => {
-            if(messageFound == 1) {
+            if(messageFound = message.id) {
                 res.status(200).json({ 'message': "Le message a bien été supprimé"})
             }else{
                 res.status(404).json({ 'erreur': " Le message n'a pas été supprimé"})

@@ -37,7 +37,7 @@
         required
       />
 
-      <input id="login" type="submit" class="btn btn-primary" @click="Login" />
+      <button id="login" type="submit" class="btn btn-primary" @click.stop.prevent="Login" > envoyer </button> 
     </form>
     <Footer />
   </section>
@@ -47,14 +47,12 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import axios from "axios";
-
 export default {
   name: "Login",
   components: {
     Header,
     Footer,
   },
-
   data() {
     return {
       email: "",
@@ -64,33 +62,37 @@ export default {
       bio: "",
       avatar: "",
       createdAt: "",
+      isLog : "",
     };
   },
 
+  
+
   methods: {
-    Login() {
+  async Login  () {
       const userData = {
         email: this.email,
         username: this.username,
         password: this.password,
-        isAdmin: this.isAdmin,
-        bio: this.bio,
-        avatar: this.avatar,
-        createdAt: this.createdAt,
-        isLog: this.isLog,
+      //  isAdmin: this.isAdmin,
+      //  bio: this.bio,
+      //  avatar: this.avatar,
+     //   createdAt: this.createdAt,
+     //   isLog: this.isLog,
       };
-
       if (
-        userData.email == true ||
-        userData.username == true ||
-        userData.password == true
+        userData.email == false ||
+        userData.username == false ||
+        userData.password == false
       ) {
-        window.alert("Données invalides");
+        alert("Données invalides");
        } else {
-        axios
-          .post("http://localhost:8080/api/auth/login", userData)
+       
+       await axios
+        .post("http://localhost:8080/api/auth/login",userData)
           .then((response) => {
             if (response.status === 200) {
+              
               return response;
             } else {
               window.alert("Données invalides");
@@ -105,16 +107,17 @@ export default {
             localStorage.setItem("isAdmin", response.data.isAdmin);
             localStorage.setItem("createdAt", response.data.createdAt);
             localStorage.setItem("islog", response.data.isLog);
-            window.location.href = "/#/profil";
+           
             console.log(response.data);
           })
           .catch((err) => {
+            alert("compte inexistant")
             console.log(err);
           });
-      }
-    },
+      }this.$router.push('/profil')
+    }
   },
-};
+}
 </script>
 
 <style scoped lang="scss">
@@ -122,7 +125,6 @@ h1 {
   color: #30289e;
   margin-top: 60px;
 }
-
 #checkForm {
   display: flex;
   flex-direction: column;
@@ -131,7 +133,6 @@ h1 {
   margin-top: 60px;
   margin-bottom: 250px;
   justify-content: center;
-
   input {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -139,7 +140,6 @@ h1 {
     width: 200px;
     color: black;
   }
-
   #login {
     color: white;
     width: 140px;
@@ -150,4 +150,3 @@ h1 {
   }
 }
 </style>
-

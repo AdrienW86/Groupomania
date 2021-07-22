@@ -44,7 +44,7 @@
         id="sign_btn"
         type="submit"
         class="btn btn-primary"
-        @click="Sign()"
+        @click.stop.prevent="Sign()"
       />
     </form>
     <Footer />

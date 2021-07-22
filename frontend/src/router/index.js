@@ -22,7 +22,7 @@ const routes = [
   {
     path:'/login',
     name: 'Login',
-    component: () => import(/* webpackChunkName: "about" */'../views/Login.vue')
+    component: () => import(/* webpackChunkName: "about" */'../components/Login.vue')
   },
   {
     path:'/profil',
@@ -58,9 +58,7 @@ const routes = [
     path:'/users/:id',
     name:'OneUser',
     component: () =>  import(/* webpackChunkName: "about" */ '../views/OneUser.vue')
-  }
-
-    
+  }   
 ]
 
 const router = new VueRouter({

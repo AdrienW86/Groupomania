@@ -9,8 +9,8 @@
             </div>
             <div class="card-body">
               <h5 class="card-title"> {{user.username}} </h5>
-                <div v-if="user.isAdmin = true"> Administrateur </div>
-                <div v-else-if="user.isAdmin = false"> Membre </div>
+                <div v-if="user.id === 1"> Administrateur </div>
+                <div v-else-if="user.id > 1"> Membre </div>
                     
             </div>
   <ul class="list-group list-group-flush">
@@ -33,7 +33,7 @@
     </li>
   </ul>
   <div class="card-footer">
-    <button v-if=" isAdmin == true"
+    <button v-if="user = 1"
       class="btn btn-danger"
      @click="deleteUser(user.id)"> effacer 
       </button>
@@ -53,7 +53,8 @@ export default {
   data() {
     return {
       users: [],
-      
+      isAdmin : "",
+       user : localStorage.getItem('user'),
     };
   },
 
@@ -63,7 +64,6 @@ export default {
 
       .then((response) => {
         this.users = response.data;
-        
         for (let i = 0; i < this.users.length; i++) {
           this.users = response.data;
           this.users[i].createdAt = this.users[i].createdAt.replace("T", " à ");
@@ -76,15 +76,13 @@ export default {
         console.log(err);
       });
   },
-
   methods: {
     
       deleteUser(id) {
         alert(id);
       window.confirm("Voulez-vous vraiment supprimer ce compte ?");
       axios
-        .delete("http://localhost:8080/api/auth/users",id, 
-        
+        .delete("http://localhost:8080/api/auth/users",id,         
         )
         .then((response) => {
           return response;
@@ -103,6 +101,7 @@ main {
   display: flex;
   justify-content: center;
 }
+
 li {
   list-style: none;
 }
