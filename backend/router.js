@@ -35,6 +35,7 @@ router.post('/messages/dislike/:id', likeCtrl.dislike);
 // Comment routes
 
 router.post('/messages/comment/:id/', commentCtrl.createComment)
-router.get('/messages/comments/:id', commentCtrl.getAllComments)
+router.get('/messages/comments/:id/', commentCtrl.getAllComments)
+router.delete('/messages/comment/:id/',commentCtrl.deleteOneComment)
 
 module.exports = router;
