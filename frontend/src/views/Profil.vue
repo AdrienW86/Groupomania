@@ -10,24 +10,21 @@
     </p>
     <section>
       <div class="card">
-      <div class="card-header">
-         <h5 class="card-title">{{ users.username }}</h5>
+        <div class="card-header">
+          <h5 class="card-title">{{ users.username }}</h5>
           <div class="admin" v-if="users.isAdmin == true">Administrateur</div>
           <div class="membre" v-else-if="users.isAdmin == false">Membre</div>
-
-          
-      </div>
+        </div>
         <div class="card-body">
           <img :src="users.avatar" alt="Card image cap" />
           <p class="card-text">{{ users.bio }}</p>
         </div>
         <div class="card-footer">
-          
           <span> Créé le: </span> <br />
           {{ users.createdAt }} <br />
           <span> Dernière modification: </span> <br />
           {{ users.updatedAt }} <br />
-          
+
           <section class="btn-box">
             <button type="button" class="btn btn-success">
               <router-link to="/profil-modify"> Modifier </router-link>
@@ -120,16 +117,16 @@ a {
 }
 
 h1 {
-  color            : #0275d8;
-  font-weight      : bold;
-  font-style       : italic;
-  margin           : 30px
+  color: #0275d8;
+  font-weight: bold;
+  font-style: italic;
+  margin: 30px;
 }
 
 .bar {
   color: rgb(122, 31, 31);
   background-color: #0275d8;
-  height: 100px
+  height: 100px;
 }
 
 h3 {
@@ -155,19 +152,18 @@ p {
   margin-top: 2%;
   margin-left: 10%;
   margin-right: 10%;
-  
 }
 .card {
   margin-bottom: 50px;
   height: 650px;
-  width: 80%
+  width: 80%;
 }
 span {
   color: blue;
   font-weight: bold;
 }
 
-.btn-box{
+.btn-box {
   display: flex;
   justify-content: space-evenly;
 }

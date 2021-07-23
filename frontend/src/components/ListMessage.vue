@@ -1,25 +1,25 @@
 <template>
-  <main class="message-infos"> 
+  <main class="message-infos">
     <button type="btn" class="btn btn-success">
       <router-link to="/new-message"> Envoyer un message </router-link>
     </button>
-
-
-
-
-
-
-
 
     <section>
       <li class="list" v-for="message in messages" :key="message.id">
         <div class="card">
           <div class="card-header">
-            <section class="admin" v-if="message.isAdmin == true">
-              <h5>{{ message.username }}</h5> 
-              <div class="btn-delete">
+            <section>
+              <div v-if="message.UserId == 1" class="admin">
+                <h5>{{ message.username }}</h5>
+              </div>
+              <div v-else class="membre">
+                <h5>{{ message.username }}</h5>
+              </div>
+              <div
+                class="btn-delete"
+                v-if="user == 1 || user == message.UserId"
+              >
                 <button
-                  v-if="user == 1"
                   class="btn btn-danger"
                   @click="deleteMessage(message.id)"
                 >
@@ -38,9 +38,7 @@
                 </button>
               </div>
             </section>
-            <div class="membre" v-else-if="message.isAdmin == false">
-              <h5>{{ message.username }}</h5>
-            </div>
+
             <div class="image_message">
               <img
                 :src="message.picture"
@@ -55,9 +53,10 @@
           </div>
 
           <div class="card_body">
-            <button class="btn btn-primary"
-            @click="getOneMessage(message.id)"> voir </button>
-              
+            <button class="btn btn-primary" @click="getOneMessage(message.id)">
+              voir
+            </button>
+
             <form enctype="mmultipart/form-data">
               <textarea
                 v-model="comment.content"
@@ -134,7 +133,7 @@
             </div>
           </div>
         </div>
-      </li> 
+      </li>
     </section>
   </main>
 </template>
@@ -144,32 +143,20 @@ import axios from "axios";
 import { mapState } from "vuex";
 export default {
   name: "ListMessage",
-  props: 
-
-      ['btnText',]
-
-
-       
-     
-
-
-
-   ,
+  props: [],
 
   computed: {
     ...mapState(["users"]),
-   
   },
   data() {
     return {
-      messages:[],
+      messages: [],
       isUserLogged: "",
       isAdmin: localStorage.getItem("isAdmin"),
       user: localStorage.getItem("user"),
       comment: {
-      content: "",
-      message: ""
-      
+        content: "",
+        // message: ""
       },
     };
   },
@@ -210,16 +197,22 @@ export default {
       window.location.href = "/#/messages/" + id;
     },
     deleteMessage(id) {
-      alert(id);
-      axios
-        .delete("http://localhost:8080/api/auth/messages/+" + id)
+      let resultat = window.confirm("effacer le message ?");
+      if (resultat == true) {
+        alert("message effacé");
+        axios
+          .delete("http://localhost:8080/api/auth/messages/+" + id)
 
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+          .then((response) => {
+            console.log(response);
+            location.reload();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        alert("message conservé");
+      }
     },
     like(id) {
       console.log(id);

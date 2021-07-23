@@ -11,9 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      
+
       models.User.belongsToMany(models.Message, {
-        through:models.Like,
+        through: models.Like,
         foreignKey: 'userId',
         otherKey: 'messageId',
       });
@@ -34,11 +34,11 @@ module.exports = (sequelize, DataTypes) => {
         as: 'message',
       });
 
-      
+
     }
   };
   Like.init({
-    messageId:{
+    messageId: {
       type: DataTypes.INTEGER,
       references: {
         model: 'Message',
@@ -47,23 +47,23 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     userId: {
-      type:DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       references: {
-        model:'User',
+        model: 'User',
         key: 'id'
       }
     },
-    isLike : {    
-      type: DataTypes.INTEGER,   
+    isLike: {
+      type: DataTypes.INTEGER,
     },
-    isDislike : {    
-      type: DataTypes.INTEGER,   
-    },   
-  }, 
-  
-  {
-    sequelize,
-    modelName: 'Like',
-  });
+    isDislike: {
+      type: DataTypes.INTEGER,
+    },
+  },
+
+    {
+      sequelize,
+      modelName: 'Like',
+    });
   return Like;
 };

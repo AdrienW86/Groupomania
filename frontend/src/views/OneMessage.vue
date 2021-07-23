@@ -1,48 +1,34 @@
 <template>
   <main>
-    <Header/>
-    <Menu/>
+    <Header />
+    <Menu />
     <div class="message-infos">
-      
-        <app-listmessage>   </app-listmessage>
-  
-         
-          
-     </div>    
-    <Footer/>
+      <app-listmessage> </app-listmessage>
+    </div>
+    <Footer />
   </main>
 </template>
 
 <script>
 //import axios from "axios"
 
-import Header from "../components/Header.vue"
-import Menu from "../components/Menu.vue"
-import Footer from "../components/Footer.vue"
-
+import Header from "../components/Header.vue";
+import Menu from "../components/Menu.vue";
+import Footer from "../components/Footer.vue";
 
 export default {
-   name: "OneMessage" ,
-  
-   components: {
-       Header,
-       Menu,
-       Footer,
-      
-   },
+  name: "OneMessage",
 
-   
+  components: {
+    Header,
+    Menu,
+    Footer,
+  },
 
-   data() {
+  data() {
     return {
-      text: 'Hi from data'
-      
+      text: "Hi from data",
     };
-   },
-
-  
-}
-
-
-
+  },
+};
 </script>

@@ -40,8 +40,6 @@ exports.like = async (req, res, next) => {
                     }).catch(err => {
                         res.status(401).json(err)
                     })
-
-
                 } else {
                     res.status(401).json(err)
                 }
@@ -56,7 +54,6 @@ exports.like = async (req, res, next) => {
         res.status(404).json({ erreur: "umessage introuvable" })
     })
 },
-
     exports.dislike = async (req, res, next) => {
 
         let headerAuth = req.headers['authorization'];

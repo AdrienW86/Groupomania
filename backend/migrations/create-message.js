@@ -12,7 +12,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
       },
-       username: {
+      username: {
         allowNull: false,
         type: Sequelize.STRING,
       },
@@ -46,7 +46,7 @@ module.exports = {
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE        
+        type: Sequelize.DATE
       },
     });
   },

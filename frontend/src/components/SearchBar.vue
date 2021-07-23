@@ -1,38 +1,41 @@
 <template>
-     <section>
-        <input type="search" class="search" placeholder="Votre recherche" @keyup="find()" id="find" />                 
-    </section>
+  <section>
+    <input
+      type="search"
+      class="search"
+      placeholder="Votre recherche"
+      @keyup="find()"
+      id="find"
+    />
+  </section>
 </template>
 
 <script>
 export default {
-    name:"SearchBar",
+  name: "SearchBar",
 
-     methods: {
+  methods: {
     find() {
-      document
-        .getElementById("find")
-        .addEventListener("keyup", function () {
-          let recherche = this.value.toLowerCase();
-          let documents = document.querySelectorAll(".list");
-          Array.prototype.forEach.call(documents, function (document) {
-            // On a bien trouvé les termes de recherche.
-            if (document.innerHTML.toLowerCase().indexOf(recherche) > -1) {
-              document.style.display = "block";
-            } else {
-              document.style.display = "none";
-            }
-          });
+      document.getElementById("find").addEventListener("keyup", function () {
+        let recherche = this.value.toLowerCase();
+        let documents = document.querySelectorAll(".list");
+        Array.prototype.forEach.call(documents, function (document) {
+          // On a bien trouvé les termes de recherche.
+          if (document.innerHTML.toLowerCase().indexOf(recherche) > -1) {
+            document.style.display = "block";
+          } else {
+            document.style.display = "none";
+          }
         });
-        },
+      });
     },
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-
 h3 {
-  color: rgb(17, 17, 119)
+  color: rgb(17, 17, 119);
 }
 
 #find {
@@ -43,12 +46,12 @@ h3 {
 section {
   background-color: #0275d8;
   height: 100px;
-  align-content: center; 
+  align-content: center;
 }
 .search {
-  margin-top: 35px
+  margin-top: 35px;
 }
- ::placeholder {
-text-align: center;
+::placeholder {
+  text-align: center;
 }
 </style>

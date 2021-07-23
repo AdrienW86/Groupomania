@@ -37,7 +37,14 @@
         required
       />
 
-      <button id="login" type="submit" class="btn btn-primary" @click.stop.prevent="Login" > envoyer </button> 
+      <button
+        id="login"
+        type="submit"
+        class="btn btn-primary"
+        @click.stop.prevent="Login"
+      >
+        envoyer
+      </button>
     </form>
     <Footer />
   </section>
@@ -62,23 +69,21 @@ export default {
       bio: "",
       avatar: "",
       createdAt: "",
-      isLog : "",
+      isLog: "",
     };
   },
 
-  
-
   methods: {
-  async Login  () {
+    async Login() {
       const userData = {
         email: this.email,
         username: this.username,
         password: this.password,
-      //  isAdmin: this.isAdmin,
-      //  bio: this.bio,
-      //  avatar: this.avatar,
-     //   createdAt: this.createdAt,
-     //   isLog: this.isLog,
+        //  isAdmin: this.isAdmin,
+        //  bio: this.bio,
+        //  avatar: this.avatar,
+        //   createdAt: this.createdAt,
+        //   isLog: this.isLog,
       };
       if (
         userData.email == false ||
@@ -86,13 +91,11 @@ export default {
         userData.password == false
       ) {
         alert("Données invalides");
-       } else {
-       
-       await axios
-        .post("http://localhost:8080/api/auth/login",userData)
+      } else {
+        await axios
+          .post("http://localhost:8080/api/auth/login", userData)
           .then((response) => {
             if (response.status === 200) {
-              
               return response;
             } else {
               window.alert("Données invalides");
@@ -107,17 +110,17 @@ export default {
             localStorage.setItem("isAdmin", response.data.isAdmin);
             localStorage.setItem("createdAt", response.data.createdAt);
             localStorage.setItem("islog", response.data.isLog);
-           
+            this.$router.push("/profil");
             console.log(response.data);
           })
           .catch((err) => {
-            alert("compte inexistant")
+            alert("compte inexistant");
             console.log(err);
           });
-      }this.$router.push('/profil')
-    }
+      }
+    },
   },
-}
+};
 </script>
 
 <style scoped lang="scss">

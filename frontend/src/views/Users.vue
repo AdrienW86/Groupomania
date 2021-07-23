@@ -1,17 +1,15 @@
 <template>
-    <main>
-      <Header/>
-        <Menu/>
-         <SearchBar/>
-            <ListUser/>
-              <Footer/>  
-    </main>
-  
+  <main>
+    <Header />
+    <Menu />
+    <SearchBar />
+    <ListUser />
+    <Footer />
+  </main>
 </template>
 
 <script>
-
-import axios from 'axios';
+import axios from "axios";
 import Header from "../components/Header";
 import Menu from "../components/Menu";
 import SearchBar from "../components/SearchBar.vue";
@@ -29,22 +27,22 @@ export default {
   },
 
   mounted() {
-      
     axios
       .get("http://localhost:8080/api/auth/users/")
       .then((response) => {
         this.users = response.data;
         for (let i = 0; i < this.users.length; i++) {
           this.users[i].createdAt = this.users[i].createdAt.replace("T", " à ");
-          this.users[i].createdAt = this.users[i].createdAt.replace(".000Z","");
+          this.users[i].createdAt = this.users[i].createdAt.replace(
+            ".000Z",
+            ""
+          );
         }
       })
       .catch((err) => {
         console.log(err);
       });
   },
-}
-
-
+};
 </script>
 

@@ -6,7 +6,7 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,        
+        type: Sequelize.INTEGER,
       },
       messageId: {
         allowNull: false,
@@ -16,11 +16,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
       },
-      isLike : {
+      isLike: {
         allowNull: false,
         type: Sequelize.INTEGER,
       },
-      isDislike : {
+      isDislike: {
         allowNull: false,
         type: Sequelize.INTEGER,
       },

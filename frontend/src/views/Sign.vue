@@ -86,11 +86,9 @@ export default {
         userData.password == null
       ) {
         window.confirm("Vous devez remplir tous les champs");
-      } else if (userData.password.length < 5){
-         window.alert("Votre mot de passe doit contenir 6 caractères minimum")
-        
-      }
-      else {
+      } else if (userData.password.length < 5) {
+        window.alert("Votre mot de passe doit contenir 6 caractères minimum");
+      } else {
         axios
           .post("http://localhost:8080/api/auth/sign", userData)
           .then((response) => {

@@ -5,7 +5,7 @@
     <section class="row card bg-light m-5 p-3">
       <form enctype="multipart/form-data">
         <div class="row">
-          <div class="col-12 justify-content-center form-group">           
+          <div class="col-12 justify-content-center form-group">
             <label for="bio_content">Contenu de votre présentation</label>
             <textarea
               v-on:keydown="isInvalid = false"
@@ -76,7 +76,7 @@ export default {
         avatar: "",
         UserId: "",
       },
-      preview: "" , 
+      preview: "",
     };
   },
 
@@ -87,32 +87,29 @@ export default {
     },
 
     Modify() {
-
       if (this.user.bio == null || this.user.avatar == null) {
         window.alert("Champs vides");
       } else {
+        const userData = new FormData();
+        userData.append("bio", this.user.bio);
+        userData.append("image", this.file);
 
-      const userData = new FormData() 
-      userData.append("bio" ,this.user.bio) 
-      userData.append("image", this.file)
-      
-    
-      
-      console.log(this.file);
+        console.log(this.file);
 
-      axios
-        .put("http://localhost:8080/api/auth/profil", userData, {
-          headers: {
-           'Content-Type': 'multipart/form-data' , Authorization: "Bearer " + localStorage.getItem("key"),
-          },
-        })
-        .then((response) => {
-          console.log(response.data);
-          alert("profil modifié !")
-          window.location.href = "/#/profil";
-        });
-    }
-  },
+        axios
+          .put("http://localhost:8080/api/auth/profil", userData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: "Bearer " + localStorage.getItem("key"),
+            },
+          })
+          .then((response) => {
+            console.log(response.data);
+            alert("profil modifié !");
+            window.location.href = "/#/profil";
+          });
+      }
+    },
   },
 };
 </script>
