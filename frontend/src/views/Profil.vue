@@ -17,8 +17,8 @@
         </div>
         <div class="card-body">
           <div>
-            <img v-if="users.avatar" :src="users.avatar"  alt="avatar" class="avatar" />
-            <img v-else src="../assets/user_default.jpg"  alt="avatar" class="avatar"/>
+            <img :src="users.avatar"  alt="avatar" class="avatar" />
+           
           </div>
          
 

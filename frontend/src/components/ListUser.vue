@@ -34,7 +34,7 @@
             </li>
           </ul>
           <div class="card-footer">
-            <button class="btn btn-danger" @click="deleteUser(user.id)">
+            <button v-if="currentUser == 1" class="btn btn-danger" @click="deleteUser(user.id)">
               effacer
             </button>
           </div>
@@ -84,15 +84,21 @@ export default {
   },
   methods: {
     deleteUser(id) {
-      alert(id);
+       let resultat = window.confirm("supprimer l'utilisateur ?");
+      if (resultat == true) {
+        alert("utilisateur supprimé");
       axios
         .delete("http://localhost:8080/api/auth/users/"+id)
         .then((response) => {
+          location.reload()
           console.log(response);
         })
         .catch((err) => {
           window.alert("impossible d'effacer le compte" + err);
         });
+          } else {
+        alert("utilisateur conservé");
+      }
     },
   },
 };

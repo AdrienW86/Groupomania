@@ -57,6 +57,7 @@ export default {
       sessionStorage.clear();
       localStorage.clear();
       window.location.href = "/";
+      location.reload
     },
   },
 };

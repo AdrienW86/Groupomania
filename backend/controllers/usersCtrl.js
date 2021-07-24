@@ -65,7 +65,7 @@ exports.sign = (req, res, next) => {
     let password = req.body.password;
     let username = req.body.username;
     let bio = req.body.bio;
-    let avatar = req.body.avatar
+    let avatar = `${req.protocol}://${req.get("host")}/images/user_default.jpg`
 
     if (req.file) {
         avatar = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
