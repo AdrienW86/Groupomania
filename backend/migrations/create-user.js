@@ -34,7 +34,6 @@ module.exports = {
       avatar: {
         allowNull: true,
         type: Sequelize.STRING,
-
       },
       bio: {
         allowNull: true,

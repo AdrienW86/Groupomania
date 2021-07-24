@@ -18,7 +18,7 @@ router.get('/users/:id/', userCtrl.getOneUser);
 router.get('/profil/', userCtrl.getUserProfil);
 router.put('/profil/', multer, userCtrl.updateUserProfil);
 router.delete('/profil/', userCtrl.deleteUserProfil);
-router.delete('users/:id/', userCtrl.deleteOneUser);
+router.delete('/users/:id/', userCtrl.deleteOneUser);
 
 // Messages routes
 
@@ -30,7 +30,7 @@ router.delete('/messages/:id/', messageCtrl.deleteMessage);
 // Likes routes
 
 router.post('/messages/like/:id/', likeCtrl.like);
-router.post('/messages/dislike/:id', likeCtrl.dislike);
+//router.post('/messages/dislike/:id', likeCtrl.dislike);
 
 // Comment routes
 

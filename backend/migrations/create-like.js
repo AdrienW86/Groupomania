@@ -11,10 +11,18 @@ module.exports = {
       messageId: {
         allowNull: false,
         type: Sequelize.INTEGER,
+        reference:{
+          model: "messages",
+          key:"id"
+      }
       },
       userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
+        reference:{
+          model: "users",
+          key:"id"
+      }
       },
       isLike: {
         allowNull: false,

@@ -264,44 +264,37 @@ exports.getOneUser = (req, res, next) => {
 
 // Supprimer le profil d'un utilisateur 
 
-exports.deleteOneUser = (req, res, next) => {
+ exports.deleteOneUser = (req, res, next) => {
 
-    
     let headerAuth = req.headers['authorization'];
-    let admin = jwt.getUserId(headerAuth);
-    let userId = req.params.id
+    let userId = jwt.getUserId(headerAuth);
 
-
+    let UserId = req.params.id
+    
     models.User.findOne({
-        where: { id: admin.id }
+        where : {id : req.params.id} 
 
-    }).then(admin => {
-        if (admin.isAdmin = 1) {
-            
-            models.User.findOne({
-                where : { id: userId}
+    }).then(userFound => {
+        if(userFound) {
 
-            }).then(() =>{
-               models.User.destroy({
-                   where: { id: userFound.id}
+            userFound.destroy({
+                where : {id : userFound.id} 
 
-               }).then(()=> {
-                   res.status(201).json({message: "utilisateur effacé"})
+        }).then(userDestroy => {
+            if(userDestroy) {
+                res.status(200).json({message: "l'utilisateur a bien été supprimé"})
 
-               }).catch(err => {
-                   res.status(404).json({ erreur: "utilisateur non supprimé"})
-               }) 
-
-            }).catch(err => {
-                return res.status(403).json({erreur: "impossible d'effacer l'utilisateur"})
-            })
-
-
+            }else {
+                res.status(401).json({erreur: "la suppression a échouée"})             
+            }
+        }).catch(err => {
+            res.status(401).json({erreur: "la suppression a échouée"})        
+        })
         }else{
-            return res.status(400).json({message: "vous n'êtes pas autorisé"})
+            res.status(401).json({erreur: "la suppression a échouée"})
         }
-
-    }).catch(err => {
-        return res.status(400).json({message: "vous n'êtes pas autorisé"})
-    })  
-}   
+    }).catch(err=> {
+        res.status(404).json({erreur: "utilisateur introuvable"})
+    })
+       
+    }

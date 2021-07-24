@@ -86,7 +86,7 @@ export default {
     deleteUser(id) {
       alert(id);
       axios
-        .delete("http://localhost:8080/api/auth/users", id)
+        .delete("http://localhost:8080/api/auth/users/"+id)
         .then((response) => {
           console.log(response);
         })

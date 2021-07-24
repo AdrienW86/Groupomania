@@ -10,15 +10,21 @@
     </p>
     <section>
       <div class="card">
-        <div class="card-header">
-          <h5 class="card-title">{{ users.username }}</h5>
+        <div class="card-header"> 
+          <h5 class="card-title">{{ users.username }}</h5> 
           <div class="admin" v-if="users.isAdmin == true">Administrateur</div>
           <div class="membre" v-else-if="users.isAdmin == false">Membre</div>
         </div>
         <div class="card-body">
-          <img :src="users.avatar" alt="Card image cap" />
+          <div>
+            <img v-if="users.avatar" :src="users.avatar"  alt="avatar" class="avatar" />
+            <img v-else src="../assets/user_default.jpg"  alt="avatar" class="avatar"/>
+          </div>
+         
+
+          </div>
           <p class="card-text">{{ users.bio }}</p>
-        </div>
+        
         <div class="card-footer">
           <span> Créé le: </span> <br />
           {{ users.createdAt }} <br />
@@ -64,6 +70,7 @@ export default {
       createdAt: localStorage.getItem("create"),
       userId: localStorage.getItem("user"),
       token: localStorage.getItem("key"),
+      defaultPicture : '"../assets/user_default.jpg"'
     };
   },
 
