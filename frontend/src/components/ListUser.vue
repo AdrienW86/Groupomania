@@ -34,7 +34,7 @@
             </li>
           </ul>
           <div class="card-footer">
-            <button v-if="currentUser == 1" class="btn btn-danger" @click="deleteUser(user.id)">
+            <button v-if=" currentUser === '1'"  class="btn btn-danger" @click="deleteUser(user.id)">
               effacer
             </button>
           </div>
