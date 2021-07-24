@@ -17,7 +17,7 @@ exports.admin = (req, res, next) => {
     let password = req.body.password;
     let username = req.body.username;
     let bio = req.body.bio;
-    let avatar = req.body.avatar
+    let avatar = `${req.protocol}://${req.get("host")}/images/administration.jpg`
 
     if (email !== 'adrien@outlook.fr' || username !== 'Adrien' || password !== 'alibabas') {
         return res.status(400).json({ 'erreur': "paramètres manquants " });

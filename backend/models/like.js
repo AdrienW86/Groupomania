@@ -11,6 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      models.User.hasMany(models.Like, {
+        onDelete:"CASCADE"
+      })
+      models.Message.hasMany(models.Like, {
+        onDelete:"CASCADE"
+      })
 
       models.User.belongsToMany(models.Message, {
         through: models.Like,
@@ -25,13 +31,17 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       models.Like.belongsTo(models.User, {
-        foreignKey: 'userId',
-        as: 'user',
+        foreignKey: {
+         name: 'userId',
+         allowNull: false
+        }
       });
 
       models.Like.belongsTo(models.Message, {
-        foreignKey: 'messageId',
-        as: 'message',
+        foreignKey: {
+          name: 'messageId',
+          allowNull: false
+         }
       });
 
 
@@ -54,9 +64,6 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     isLike: {
-      type: DataTypes.INTEGER,
-    },
-    isDislike: {
       type: DataTypes.INTEGER,
     },
   },
