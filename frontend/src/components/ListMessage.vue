@@ -47,46 +47,14 @@
             </div>
           </div>
           <div class="text">
-            <h6 class="card-title">{{ message.title }}</h6>
+            <h6 class="card-title">{{message.title }}</h6>
             {{ message.content }}
           </div>
 
           <div class="card_body">
-           <!-- <button class="btn btn-primary" @click="getOneMessage(message.id)">
+           <button class="btn btn-primary" @click="getOneMessage(message.id)">
               voir
             </button>  
-
-            <form enctype="mmultipart/form-data">
-              <textarea
-                v-model="comment.content"
-                type="textarea"
-                rows="2"
-                name="comment"
-                placeholder="Votre commentaire, agrandissez la fenêtre"
-                class="comment-input"
-              >
-              </textarea>
-              <div class="btn-comment">
-                <button
-                  type="submit"
-                  class="btn btn-primary"
-                  @click="commentMessage(message.id)"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-envelope-fill"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </form> !-->
           </div>
           <div class="card-footer">
             <p>{{ message.createdAt }}</p>
@@ -127,6 +95,17 @@ import { mapState } from "vuex";
 
 export default {
   name: "ListMessage",
+
+  props: 
+    {
+      title: String
+    },
+  
+    
+      
+      
+    
+  
  
   computed: {
     ...mapState(["users"]),
@@ -139,6 +118,8 @@ export default {
       user: localStorage.getItem("user"),
       comment: {
         content: "",
+
+        
         
       },
       messageId: null
@@ -167,10 +148,10 @@ export default {
         });
     },
     getOneMessage(id) {
-      alert(id);
-     
+      
+     const messageId = this.$route.params.id
       axios
-        .get("http://localhost:8080/api/auth/messages/" + id, {
+        .get(`http://localhost:8080/api/auth/messages/${messageId}`, {
           headers: { Authorization: "Bearer " + localStorage.getItem("key") },
         })
         .then((response) => {
@@ -181,14 +162,14 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-      window.location.href = "/#/messages/"+id;
+      window.location.href = '/#/messages/'+id;
     },
     deleteMessage(id) {
       let resultat = window.confirm("effacer le message ?");
       if (resultat == true) {
-        alert("message effacé");
+        alert("supression du message numéro" +id);
         axios
-          .delete("http://localhost:8080/api/auth/messages/+" + id)
+          .delete ("http://localhost:8080/api/auth/messages/"+id)
 
           .then((response) => {
             console.log(response);
@@ -215,33 +196,10 @@ export default {
           console.log(err);
         });
     },
+
+
     
-    commentMessage(id) {
-      if (this.comment.content == null) {
-        window.alert("saisies invalides");
-      } else {
-        const newComment = new FormData();
-        newComment.append("username", localStorage.getItem("username"));
-        newComment.append("content", this.comment.content.toString());
-        axios
-          .post(
-            "http://localhost:8080/api/auth/messages/comment/" + id,
-            newComment,
-            {
-              headers: {
-                Authorization: "Bearer " + localStorage.getItem("key"),
-              },
-            }
-          )
-          .then((response) => {
-            console.log(response.data);
-            alert("commentaire envoyé !");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-    },
+    
   },
   mounted() {
     axios
