@@ -7,9 +7,9 @@ module.exports = {
     generateTokenForUser: function (userData) {
         return jwt.sign({
             userId: userData.id,
-            isAdmin: userData.isAdmin
+            isAdmin: userData.isAdmin       
         },
-            JWT_SIGN_SECRET,
+            JWT_SIGN_SECRET,                    // Signature du token
             {
                 expiresIn: '24h'
             })
@@ -17,12 +17,12 @@ module.exports = {
     parseAuthorization: function (authorization) {
         return (authorization != null) ? authorization.replace('Bearer ', '') : null;   // On efface " Bearer pour ne récupérer que le token"
     },
-    getUserId: function (authorization) {
-        let userId = -1;
+    getUserId: function (authorization) {           // récupère le userId
+        let userId = -1;                            // Si l'utilisateur n'est reconnu, il sera à -1 et ne pourra effectuer aucune requête
         let token = module.exports.parseAuthorization(authorization);
         if (token != null) {
             try {
-                let jwtToken = jwt.verify(token, JWT_SIGN_SECRET);
+                let jwtToken = jwt.verify(token, JWT_SIGN_SECRET);      
                 if (jwtToken != null)
                     userId = jwtToken.userId;
             } catch (err) { }

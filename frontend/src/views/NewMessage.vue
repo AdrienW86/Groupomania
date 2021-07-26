@@ -105,14 +105,14 @@ export default {
         formData.append("isAdmin", localStorage.getItem("isAdmin"));
         formData.append("content", this.message.content.toString());
         formData.append("title", this.message.title.toString());
-        console.log(this.file);
+        
 
         axios
           .post("http://localhost:8080/api/auth/messages/new/", formData, {
             headers: { Authorization: "Bearer " + localStorage.getItem("key") },
           })
           .then((response) => {
-            console.log(response.data);
+            console.log(response);
             alert("message envoyé !");
             window.location.href = "/#/messages";
           })

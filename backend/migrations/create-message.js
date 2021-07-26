@@ -28,10 +28,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER
       },
-      dislikes: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
       picture: {
         allowNull: true,
         type: Sequelize.STRING,
