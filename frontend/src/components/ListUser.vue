@@ -9,8 +9,8 @@
           </div>
           <div class="card-body">
             <h5 class="card-title">{{ user.username }}</h5>
-            <div v-if="user.id === 1">Administrateur</div>
-            <div v-else-if="user.id > 1">Membre</div>
+            <div class="admin" v-if="user.id === 1">Administrateur</div>
+            <div class="membre" v-else-if="user.id > 1">Membre</div>
           </div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
@@ -118,7 +118,8 @@ export default {
 <style scoped lang="scss">
 main {
   display: flex;
-  justify-content: center;
+  flex-flow: wrap;
+  
 }
 
 li {
@@ -133,7 +134,10 @@ h1 {
   font-style: italic;
   margin: 30px;
 }
-
+h5 {
+  color: blue;
+  font-weight: bold;
+}
 main {
   display: flex;
   justify-content: space-between;
@@ -156,12 +160,12 @@ img {
   font-weight: bold;
 }
 
-.update {
+.update, .membre {
   color: green;
   font-weight: bold;
 }
 
-.create {
+.create, .admin {
   color: red;
   font-weight: bold;
 }

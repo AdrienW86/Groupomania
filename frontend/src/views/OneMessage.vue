@@ -287,7 +287,9 @@ h3 {
   margin: 20px;
 }
 h5 {
+  color:blue;
   margin-bottom: 10px;
+  font-weight: bold;
 }
 .comment-input {
   width: 60%;
