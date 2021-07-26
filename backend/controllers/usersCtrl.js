@@ -264,37 +264,37 @@ exports.getOneUser = (req, res, next) => {
 
 // Supprimer le profil d'un utilisateur 
 
- exports.deleteOneUser = (req, res, next) => {
+exports.deleteOneUser = (req, res, next) => {
 
     let headerAuth = req.headers['authorization'];
     let userId = jwt.getUserId(headerAuth);
 
     let UserId = req.params.id
-    
+
     models.User.findOne({
-        where : {id : req.params.id} 
+        where: { id: req.params.id }
 
     }).then(userFound => {
-        if(userFound) {
+        if (userFound) {
 
             userFound.destroy({
-                where : {id : userFound.id} 
+                where: { id: userFound.id }
 
-        }).then(userDestroy => {
-            if(userDestroy) {
-                res.status(200).json({message: "l'utilisateur a bien été supprimé"})
+            }).then(userDestroy => {
+                if (userDestroy) {
+                    res.status(200).json({ message: "l'utilisateur a bien été supprimé" })
 
-            }else {
-                res.status(401).json({erreur: "la suppression a échouée"})             
-            }
-        }).catch(err => {
-            res.status(401).json({erreur: "la suppression a échouée"})        
-        })
-        }else{
-            res.status(401).json({erreur: "la suppression a échouée"})
+                } else {
+                    res.status(401).json({ erreur: "la suppression a échouée" })
+                }
+            }).catch(err => {
+                res.status(401).json({ erreur: "la suppression a échouée" })
+            })
+        } else {
+            res.status(401).json({ erreur: "la suppression a échouée" })
         }
-    }).catch(err=> {
-        res.status(404).json({erreur: "utilisateur introuvable"})
+    }).catch(err => {
+        res.status(404).json({ erreur: "utilisateur introuvable" })
     })
-       
-    }
+
+}

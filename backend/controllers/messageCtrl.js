@@ -23,8 +23,8 @@ exports.createMessage = (req, res, next) => {
     if (req.file) {
         picture = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
     }
-    else{
-        picture =`${req.protocol}://${req.get("host")}/images/message_default.jpg`
+    else {
+        picture = `${req.protocol}://${req.get("host")}/images/message_default.jpg`
     }
     if (title == null || content == null) {
         return res.status(400).json({ 'erreur': "paramètres manquants" });

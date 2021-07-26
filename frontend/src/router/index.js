@@ -20,45 +20,50 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Sign.vue')
   },
   {
-    path:'/login',
+    path: '/login',
     name: 'Login',
     component: () => import(/* webpackChunkName: "about" */'../components/Login.vue')
   },
   {
-    path:'/profil',
+    path: '/profil',
     name: 'Profil',
     component: () => import(/* webpackChunkName: "about" */ '../views/Profil.vue')
   },
   {
-    path:'/profil-modify',
+    path: '/profil-modify',
     name: 'ProfilModify',
     component: () => import(/* webpackChunkName: "about" */ '../views/ProfilModify.vue')
   },
   {
-    path:'/messages',
-    name:'Messages',
+    path: '/messages',
+    name: 'Messages',
     component: () => import(/* webpackChunkName: "about" */ '../views/Messages.vue')
   },
   {
-    path:'/new-message',
-    name:'NewMessage',
+    path: '/new-message',
+    name: 'NewMessage',
     component: () => import(/* webpackChunkName: "about" */ '../views/NewMessage.vue')
   },
   {
-    path:'/messages/:id',
-    name:'OneMessage',
+    path: '/messages/:id',
+    name: 'OneMessage',
     component: () => import(/* webpackChunkName: "about" */ '../views/OneMessage.vue')
   },
   {
-    path:'/users',
-    name:'Users',
+    path: '/users',
+    name: 'Users',
     component: () => import(/* webpackChunkName: "about" */ '../views/Users.vue')
   },
   {
-    path:'/users/:id',
-    name:'OneUser',
-    component: () =>  import(/* webpackChunkName: "about" */ '../views/OneUser.vue')
-  }   
+    path: '/users/:id',
+    name: 'OneUser',
+    component: () => import(/* webpackChunkName: "about" */ '../views/OneUser.vue')
+  },
+  {
+    path: '/*',
+    name: 'NotFound',
+    component: () => import(/* webpackChunkName: "about" */ '../views/NotFound.vue')
+  }
 ]
 
 const router = new VueRouter({

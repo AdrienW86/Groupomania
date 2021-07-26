@@ -12,10 +12,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       models.User.hasMany(models.Like, {
-        onDelete:"CASCADE"
+        onDelete: "CASCADE"
       })
       models.Message.hasMany(models.Like, {
-        onDelete:"CASCADE"
+        onDelete: "CASCADE"
       })
 
       models.User.belongsToMany(models.Message, {
@@ -32,8 +32,8 @@ module.exports = (sequelize, DataTypes) => {
 
       models.Like.belongsTo(models.User, {
         foreignKey: {
-         name: 'userId',
-         allowNull: false
+          name: 'userId',
+          allowNull: false
         }
       });
 
@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: {
           name: 'messageId',
           allowNull: false
-         }
+        }
       });
 
 

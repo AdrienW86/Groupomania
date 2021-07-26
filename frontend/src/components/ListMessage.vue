@@ -1,8 +1,10 @@
 <template>
   <main class="message-infos">
-    <button type="btn" class="btn btn-success">
-      <router-link to="/new-message"> Envoyer un message </router-link>
-    </button>
+    <div class="create">
+      <button type="btn" class="btn btn-success">
+        <router-link to="/new-message"> Créer un message </router-link>
+      </button>
+    </div>
     <section>
       <li class="list" v-for="message in messages" :key="message.id">
         <div class="card">
@@ -18,11 +20,11 @@
                 class="btn-delete"
                 v-if="user == 1 || user == message.UserId"
               >
-                <button
+                <button aria-label="Supprimer"
                   class="btn btn-danger"
                   @click="deleteMessage(message.id)"
                 >
-                  <svg
+                  <svg 
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
                     height="16"
@@ -37,7 +39,6 @@
                 </button>
               </div>
             </section>
-
             <div class="image_message">
               <img
                 :src="message.picture"
@@ -47,17 +48,20 @@
             </div>
           </div>
           <div class="text">
-            <h6 class="card-title">{{message.title }}</h6>
+            <h6 class="card-title">{{ message.title }}</h6>
             {{ message.content }}
           </div>
 
           <div class="card_body">
-           <button class="btn btn-primary" @click="getOneMessage(message.id)">
-              voir
-            </button>  
+            <button class="btn btn-primary" @click="getOneMessage(message.id)">
+              Voir le message
+            </button>
           </div>
           <div class="card-footer">
-            <p>{{ message.createdAt }}</p>
+            <p>
+              Message envoyé le: <br />
+              {{ message.createdAt }}
+            </p>
             <div class="box-btn">
               <button
                 type="button"
@@ -77,7 +81,7 @@
                   />
                 </svg>
               </button>
-              <span id="like" class="like"> {{ message.likes }} </span>             
+              <span id="like" class="like"> {{ message.likes }} </span>
             </div>
           </div>
         </div>
@@ -90,23 +94,13 @@
 import axios from "axios";
 import { mapState } from "vuex";
 
-
-
-
 export default {
   name: "ListMessage",
 
-  props: 
-    {
-      title: String
-    },
-  
-    
-      
-      
-    
-  
- 
+  props: {
+    title: String,
+  },
+
   computed: {
     ...mapState(["users"]),
   },
@@ -118,11 +112,8 @@ export default {
       user: localStorage.getItem("user"),
       comment: {
         content: "",
-
-        
-        
       },
-      messageId: null
+      messageId: null,
     };
   },
 
@@ -148,28 +139,26 @@ export default {
         });
     },
     getOneMessage(id) {
-      
-     const messageId = this.$route.params.id
+      const messageId = this.$route.params.id;
       axios
         .get(`http://localhost:8080/api/auth/messages/${messageId}`, {
           headers: { Authorization: "Bearer " + localStorage.getItem("key") },
         })
         .then((response) => {
-
-          this.messageId = response.id
+          this.messageId = response.id;
           console.log(response);
         })
         .catch((err) => {
           console.log(err);
         });
-      window.location.href = '/#/messages/'+id;
+      window.location.href = "/#/messages/" + id;
     },
     deleteMessage(id) {
       let resultat = window.confirm("effacer le message ?");
       if (resultat == true) {
-        alert("supression du message numéro" +id);
+        alert("supression du message numéro");
         axios
-          .delete ("http://localhost:8080/api/auth/messages/"+id)
+          .delete("http://localhost:8080/api/auth/messages/" + id)
 
           .then((response) => {
             console.log(response);
@@ -185,7 +174,7 @@ export default {
     like(id) {
       console.log(id);
       axios
-        .post("http://localhost:8080/api/auth/messages/like/"+id,this.user, {
+        .post("http://localhost:8080/api/auth/messages/like/" + id, this.user, {
           headers: { Authorization: "Bearer " + localStorage.getItem("key") },
         })
         .then((response) => {
@@ -196,11 +185,8 @@ export default {
           console.log(err);
         });
     },
-
-
-    
-    
   },
+
   mounted() {
     axios
       .get("http://localhost:8080/api/auth/messages/")
@@ -225,6 +211,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.create {
+  margin-top: 40px;
+}
+
 h1 {
   color: #0275d8;
   font-weight: bold;
@@ -236,7 +226,7 @@ h5 {
   font-style: italic;
 }
 h6 {
-  color: blue;
+  color:blue;
   font-weight: bold;
 }
 section {
@@ -256,21 +246,22 @@ li {
   width: 250px;
   justify-content: center;
 }
-img {
-  width: 240px;
-  height: 300px;
+.card-title {
+  margin-top: 20px;
 }
 .card-header {
   height: 300px;
 }
-.card-text {
-  height: 150px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.card_body {
+  margin: 7px;
 }
 .text {
+  color: rgb(46, 46, 165);
+  font-weight: bold;
   height: 220px;
+  white-space: pre-wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 img {
   position: relative;
@@ -318,8 +309,5 @@ form {
   position: relative;
   left: 5px;
   top: 10px;
-}
-::placeholder {
-  text-align: center;
 }
 </style>

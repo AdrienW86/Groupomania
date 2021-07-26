@@ -56,8 +56,7 @@ export default {
     disconnect() {
       sessionStorage.clear();
       localStorage.clear();
-      window.location.href = "/";
-      location.reload
+      window.location.href = "/#/login";
     },
   },
 };

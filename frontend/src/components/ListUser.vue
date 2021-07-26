@@ -34,8 +34,15 @@
             </li>
           </ul>
           <div class="card-footer">
-            <button v-if=" currentUser === '1'"  class="btn btn-danger" @click="deleteUser(user.id)">
+            <button
+              v-if="currentUser === '1'"
+              class="btn btn-danger"
+              @click="deleteUser(user.id)"
+            >
               effacer
+            </button>
+            <button class="btn btn-primary" @click="getOneUser(user.id)">
+              Voir
             </button>
           </div>
         </div>
@@ -84,21 +91,25 @@ export default {
   },
   methods: {
     deleteUser(id) {
-       let resultat = window.confirm("supprimer l'utilisateur ?");
+      let resultat = window.confirm("supprimer l'utilisateur ?");
       if (resultat == true) {
         alert("utilisateur supprimé");
-      axios
-        .delete("http://localhost:8080/api/auth/users/"+id)
-        .then((response) => {
-          location.reload()
-          console.log(response);
-        })
-        .catch((err) => {
-          window.alert("impossible d'effacer le compte" + err);
-        });
-          } else {
+        axios
+          .delete("http://localhost:8080/api/auth/users/" + id)
+          .then((response) => {
+            location.reload();
+            console.log(response);
+          })
+          .catch((err) => {
+            window.alert("impossible d'effacer le compte" + err);
+          });
+      } else {
         alert("utilisateur conservé");
       }
+    },
+
+    getOneUser(id) {
+      window.location.href = "/#/users/" + id;
     },
   },
 };

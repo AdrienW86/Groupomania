@@ -1,17 +1,17 @@
 <template>
   <section class="router">
     <div class="router_link">
-      <router-link to="/messages">
+      <router-link aria-label="link pour aller sur la page messages" to="/messages">
         <h2>Messages</h2>
       </router-link>
     </div>
     <div class="router_link">
-      <router-link to="/users">
+      <router-link aria-label="link pour aller sur la page users" to="/users">
         <h2>Membres</h2>
       </router-link>
     </div>
     <div class="router_link">
-      <router-link to="/profil">
+      <router-link aria-label="link pour aller sur la page profil" to="/profil">
         <h2>Mon Profil</h2>
       </router-link>
     </div>
@@ -19,6 +19,12 @@
 </template>
 
 <style lang="scss" scoped>
+h2 {
+  @media only screen and (max-width: 340px) {
+    font-size: 1em;
+    font-weight: bold;
+  }
+}
 .router {
   margin-top: 20px;
   margin-bottom: 20px;

@@ -3,21 +3,30 @@
     <Header />
     <Menu />
     <div class="message-infos">
-      <h1>Utilisateur</h1>
-      <li class="list" v-for="message in messages" :key="message.id">
-        <div class="card" style="width: 28rem">
-          <img class="card-img-top" alt="Card image cap" />{{ message.picture }}
-          <div class="card-body">
-            <h5 class="card-title">
-              {{ message.title }}
-            </h5>
-            <p class="card-text">
-              {{ message.content }}
-            </p>
-            <a href="#" class="btn btn-primary">Voir le message</a>
-          </div>
+      <div class="card" style="width: 28rem">
+        <div class="card-header">
+          <img :src="user.avatar" class="card-img-top" alt="Card image cap" />
         </div>
-      </li>
+        <div class="card-body">
+          <h3 class="card-title">
+            {{ user.username }}
+          </h3>
+          <div class="admin" v-if="user.isAdmin == true">Administrateur</div>
+          <div class="membre" v-else-if="user.isAdmin == false">Membre</div>
+
+          <p class="card-text">
+            {{ user.bio }}
+          </p>
+        </div>
+        <div class="card-footer">
+          <br />
+          Profil créé le: <br />
+          <span class="created"> {{ user.createdAt }} </span> <br />
+          <br />
+          Profil mis à jour le: <br />
+          <span class="updated"> {{ user.updatedAt }} </span><br />
+        </div>
+      </div>
     </div>
     <Footer />
   </main>
@@ -39,21 +48,23 @@ export default {
 
   data() {
     return {
-      users: [],
+      user: "",
     };
   },
   mounted() {
+    const userId = this.$route.params.id;
     axios
-      .get("http://localhost:8080/api/auth/users")
+      .get(`http://localhost:8080/api/auth/users/${userId}`, {
+        headers: { Authorization: "Bearer " + localStorage.getItem("key") },
+      })
       .then((response) => {
-        this.users = response.data;
-        for (let i = 0; i < this.users.length; i++) {
-          this.users[i].createdAt = this.users[i].createdAt.replace("T", " à ");
-          this.users[i].createdAt = this.users[i].createdAt.replace(
-            ".000Z",
-            ""
-          );
-        }
+        this.user = response.data;
+
+        this.user.createdAt = this.user.createdAt.replace("T", " à ");
+        this.user.updatedAt = this.user.updatedAt.replace("T", " à ");
+        this.user.updatedAt = this.user.updatedAt.replace(".000Z", "");
+        this.user.createdAt = this.user.createdAt.replace(".000Z", "");
+        console.log(response);
       })
       .catch((err) => {
         console.log(err);
@@ -61,3 +72,47 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.message-infos {
+  display: flex;
+  justify-content: center;
+  width: 80%;
+  margin: 12% 10% 12% 10%
+
+}
+
+.card {
+  margin-bottom: 10%;
+}
+.admin {
+  color: red;
+  font-weight: bold;
+}
+.membre {
+  color: green;
+  font-weight: bold;
+}
+.created,
+.updated {
+  font-weight: bold;
+  font-style: italic;
+}
+
+.card-footer,
+p {
+  color: blue;
+  font-weight: bold;
+  padding-bottom: 10%;
+}
+p {
+  margin-top: 30px;
+}
+.created {
+  color: red;
+}
+
+.updated {
+  color: green;
+}
+</style>

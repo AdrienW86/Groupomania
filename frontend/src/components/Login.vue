@@ -4,7 +4,7 @@
 
     <h1>Connectez-vous</h1>
 
-    <form id="checkForm">
+    <form id="checkForm" aria-label="formulaire de connexion">
       <label for="username"> Entrer votre pseudo </label>
 
       <input
@@ -37,13 +37,13 @@
         required
       />
 
-      <button
+      <button aria-label="bouton de connexion"
         id="login"
         type="submit"
         class="btn btn-primary"
-        @click.stop.prevent="Login"
+        @click.stop.prevent="Login()"
       >
-        envoyer
+        Envoyer
       </button>
     </form>
     <Footer />

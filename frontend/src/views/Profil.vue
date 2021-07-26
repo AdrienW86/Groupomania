@@ -10,21 +10,18 @@
     </p>
     <section>
       <div class="card">
-        <div class="card-header"> 
-          <h5 class="card-title">{{ users.username }}</h5> 
+        <div class="card-header">
+          <h5 class="card-title">{{ users.username }}</h5>
           <div class="admin" v-if="users.isAdmin == true">Administrateur</div>
           <div class="membre" v-else-if="users.isAdmin == false">Membre</div>
         </div>
         <div class="card-body">
           <div>
-            <img :src="users.avatar"  alt="avatar" class="avatar" />
-           
+            <img :src="users.avatar" alt="avatar" class="avatar" />
           </div>
-         
+        </div>
+        <p class="card-text">{{ users.bio }}</p>
 
-          </div>
-          <p class="card-text">{{ users.bio }}</p>
-        
         <div class="card-footer">
           <span> Créé le: </span> <br />
           {{ users.createdAt }} <br />
@@ -70,7 +67,7 @@ export default {
       createdAt: localStorage.getItem("create"),
       userId: localStorage.getItem("user"),
       token: localStorage.getItem("key"),
-      defaultPicture : '"../assets/user_default.jpg"'
+      defaultPicture: '"../assets/user_default.jpg"',
     };
   },
 
@@ -153,6 +150,11 @@ section {
 img {
   width: 50%;
   height: 300px;
+
+  @media only screen and (max-width: 340px) {
+    width: 100%;
+    height: 280px;
+  }
 }
 p {
   width: 80%;
@@ -182,5 +184,8 @@ span {
 .membre {
   color: green;
   font-weight: bold;
+}
+section{
+  margin-bottom: 15px;
 }
 </style>

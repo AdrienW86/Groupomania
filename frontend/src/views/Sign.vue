@@ -4,7 +4,7 @@
 
     <h1>Créer un compte</h1>
 
-    <form id="checkForm">
+    <form id="checkForm" aria-label="formulaire d'inscription">
       <label for="username"> Entrer votre pseudo </label>
 
       <input
@@ -40,12 +40,13 @@
         required
       />
 
-      <input
+      <button aria-label="bouton d'enregistement"
         id="sign_btn"
         type="submit"
         class="btn btn-primary"
-        @click.stop.prevent="Sign()"
-      />
+        @click.stop.prevent="Sign()">
+        Envoyer
+      </button>/>
     </form>
     <Footer />
   </div>

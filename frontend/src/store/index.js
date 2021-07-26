@@ -7,21 +7,16 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 
   state: {
-    users :[],
-    messages : [],
-    
+    users: [],
+    messages: [],
+
   },
 
   mutations: {
 
-   
   },
 
   actions: {
-
-    
-
-
 
   },
 

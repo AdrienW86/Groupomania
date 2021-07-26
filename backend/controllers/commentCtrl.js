@@ -34,58 +34,61 @@ exports.createComment = async (req, res, next) => {
 
     exports.getAllComments = (req, res, next) => {
 
-    let messageId = req.params.id;
+        let messageId = req.params.id;
 
         models.Message.findOne({
-            where: { id: messageId}
+            where: { id: messageId }
 
         }).then(messageFound => {
-            if(!messageFound) {
-                res.status(404).json({ erreur: " le message n'existe pas"})
+            if (!messageFound) {
+                res.status(404).json({ erreur: " le message n'existe pas" })
 
-            }else {
+            } else {
                 models.Comment.findAll({
-                    where: { messageId :messageId}
+                    where: { messageId: messageId },
+                    order: [
+                        ["createdAt", "DESC"]
+                    ]
 
-                }).then(commentFound => {
-                  return  res.status(201).json({commentFound})
+                }).then(comments => {
+                    return res.status(201).json(comments)
 
                 }).catch(err => {
-                    return res.status(404).json({ erreur: "commentaires introuvables"})
+                    return res.status(404).json({ erreur: "commentaires introuvables" })
                 })
             }
 
         }).catch(err => {
-             res.status(404).json({ erreur: "impossible de trouver le message"})
+            res.status(404).json({ erreur: "impossible de trouver le message" })
         })
     }
 
-    exports.deleteOneComment = (req, res, next) => {
+exports.deleteOneComment = (req, res, next) => {
 
-        let commentId = req.params.id
+    let commentId = req.params.id
 
-            models.Comment.findOne({
-                where: { id: commentId }
+    models.Comment.findOne({
+        where: { id: commentId }
 
-            }).then(commentFound => {
-                if(commentFound) {
+    }).then(commentFound => {
+        if (commentFound) {
 
-                    models.Comment.destroy({
-                        where: { id: commentFound.id}
+            models.Comment.destroy({
+                where: { id: commentFound.id }
 
-                    }).then(deletedComment => {
-                        res.status(201).json({message:"commentaire supprimé"})
-
-                    }).catch(err => {
-                        return res.status(403).json(err)
-                    })
-
-                }else{
-                    res.status(404).json({erreur: "commentaire introuvable"})
-                }
+            }).then(deletedComment => {
+                res.status(201).json({ message: "commentaire supprimé" })
 
             }).catch(err => {
-                res.status(404).json(err)
+                return res.status(403).json(err)
             })
 
-    }
+        } else {
+            res.status(404).json({ erreur: "commentaire introuvable" })
+        }
+
+    }).catch(err => {
+        res.status(404).json(err)
+    })
+
+}

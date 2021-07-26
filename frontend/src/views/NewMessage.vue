@@ -3,7 +3,7 @@
     <Header />
     <Menu />
     <section class="row card bg-light m-5 p-3">
-      <form enctype="multipart/form-data">
+      <form enctype="multipart/form-data" aria-label="formulaire pour nouveau message">
         <div class="row">
           <div class="col-12 justify-content-center form-group">
             <label for="message_title">Titre de votre message</label>
@@ -117,6 +117,7 @@ export default {
             window.location.href = "/#/messages";
           })
           .catch((error) => {
+            alert("limite de caractères dépassée");
             console.log(error);
           });
       }
