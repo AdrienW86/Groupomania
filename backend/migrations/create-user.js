@@ -19,17 +19,13 @@ module.exports = {
       email: {
         allowNull: false,
         type: Sequelize.STRING,
-
+        unique: true,
       },
       password: {
         allowNull: false,
         type: Sequelize.STRING,
         unique: true,
-        validate: {
-          isEmail: {
-            msg: "Email déjà utilisé"
-          }
-        }
+        
       },
       avatar: {
         allowNull: true,

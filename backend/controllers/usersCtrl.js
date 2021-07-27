@@ -1,8 +1,10 @@
 // Imports
-require('dotenv').config()
+// Imports
+const dotenv = require('../services/admin')
 const bcrypt = require('bcrypt');
-const jwt = require('../middleware/jwt.utils');
-const models = require('../models/index');
+const models = require('../models');
+const userId = require('../services/GetUserId')
+const jwt = require('jsonwebtoken')
 
 // Regex
 
@@ -19,7 +21,7 @@ exports.admin = (req, res, next) => {
     let bio = req.body.bio;
     let avatar = `${req.protocol}://${req.get("host")}/images/administration.jpg`
 
-    if (email !== PROCESS.env.ADMIN_EMAIL || username !== PROCESS.env.ADMIN_USER || password !== PROCESS.env.ADMIN_PASS) {
+    if (email !== ADMIN_EMAIL || username !== ADMIN_USER || password !== ADMIN_PASS) {
         return res.status(400).json({ 'erreur': "paramètres manquants " });
     }
 
@@ -119,42 +121,45 @@ exports.sign = (req, res, next) => {
 }
 
 // Connexion des utilisateurs
-
-exports.login = (req, res, next) => {
-
-    let email = req.body.email;
-    let password = req.body.password;
-
-    if (email == null || password == null) {
-        return res.status(400).json({ 'erreur': "paramètres manquants" });
-    }
-
+exports.login = (req,res,next)=>{
     models.User.findOne({
-        where: { email: email }
-    })
-        .then(userFound => {
-            if (userFound) {
-                bcrypt.compare(password, userFound.password, function (errBycrypt, resBycrypt) {
-                    if (resBycrypt) {
-                        return res.status(200).json({
-                            'userId': userFound.id,
-                            'token': jwt.generateTokenForUser(userFound),
-                            'isAdmin': userFound.isAdmin,
-                            'username': userFound.username,
-                            'isLog': +1
-                        });
-                    } else {
-                        return res.status(403).json({ 'erreur': "mot de passe invalide" });
-                    }
-                });
-            } else {
-                return res.status(404).json({ 'erreur': "utilisateur introuvable dans la base de données" });
-            }
-        })
-        .catch(err => {
-            return res.status(500).json({ 'erreur': "impossible de connecter l'utilisateur" });
-        });
-}
+         where :{
+             email : req.body.email,
+        }
+     })
+     .then((user)=>{
+         if(!user){
+             const message= 'User non trouvé!'
+             return res.status(404).json({message})
+         }
+        
+         let verifPass = bcrypt.compareSync(req.body.password,user.password);
+         if(!verifPass){
+             const message = 'Password non valide'
+             return res.status(401).json({message})
+         }
+         const JWT_SIGN_SECRET = 'relou';
+         let token = jwt.sign({userId: user.id}, JWT_SIGN_SECRET, {
+             expiresIn : 86400 
+         });
+         
+             return res.status(200).json({
+                 id: user.id,
+                 username: user.username,
+                 token: token,
+                 isAdmin: user.isAdmin,
+                 isLog: +1,
+                 
+                 
+             })
+ 
+         })
+     
+     .catch((err)=>{
+         return res.status(500).json({message : err.message})
+     })
+ 
+ };
 
 // Afficher le profil de l'utilisateur
 

@@ -1,7 +1,7 @@
 // Imports
 
 const models = require('../models/');
-const jwt = require('../middleware/jwt.utils');
+const jwt = require('jsonwebtoken');
 const TITLE_LIMIT = 2;
 const CONTENT_LIMIT = 4;
 
@@ -13,8 +13,7 @@ exports.createMessage = (req, res, next) => {
 
     //Gettin auth header
 
-    let headerAuth = req.headers['authorization'];
-    let userId = jwt.getUserId(headerAuth);
+   
     let title = req.body.title;
     let content = req.body.content;
     let username = req.body.username;
@@ -33,7 +32,7 @@ exports.createMessage = (req, res, next) => {
         return res.status(400).json({ 'erreur': "paramètres invalides" });
     }
     models.User.findOne({
-        where: { id: userId }
+        where: { id: userId(req) }
     })
         .then(userFound => {
             if (userFound) {

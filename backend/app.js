@@ -1,14 +1,15 @@
 // Import 
 
 const express = require('express');
-const userRoutes = require('./router');
+const app = express();
+const userRoutes = require('./routes/users');
+const messageRoutes = require('./routes/message')
 const helmet = require('helmet');
 const cors = require('cors');
 const path = require('path');
+const auth = require('./middleware/auth')
 
 // Instances
-
-const app = express();
 
 app.use(cors())
 
@@ -21,7 +22,7 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); //Parse URL-encoded bodies
-app.use(helmet());             // Protection contre les injections SQL et XMS
+app.use(helmet());             // Protection contre les injections SQL et XSS
 
 app.use("/images", express.static(path.join(__dirname, 'images')));
 
@@ -34,7 +35,8 @@ app.get('/', function (req, res) {
   res.status(200).send('<h1> Serveur en marche </h1>');
 });
 
+app.use('/api/auth', messageRoutes)
 app.use('/api/auth', userRoutes)
 
-
+module.exports = app
 

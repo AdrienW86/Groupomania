@@ -1,6 +1,6 @@
 const models = require('../models/');
-const jwt = require('../middleware/jwt.utils');
-var asyncLib = require('async');
+
+
 
 // Constants
 const DISLIKED = 0;

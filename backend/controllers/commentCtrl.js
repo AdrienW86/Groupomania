@@ -1,5 +1,4 @@
 const models = require('../models/');
-const jwt = require('../middleware/jwt.utils');
 
 exports.createComment = async (req, res, next) => {
     let headerAuth = req.headers['authorization'];
@@ -31,7 +30,6 @@ exports.createComment = async (req, res, next) => {
         res.status(404).json({ erreur: "umessage introuvable" })
     })
 },
-
     exports.getAllComments = (req, res, next) => {
 
         let messageId = req.params.id;
