@@ -1,5 +1,5 @@
 const models = require('../models/');
-
+const UserId = require('../Services/GetUserId')
 
 
 // Constants
@@ -12,11 +12,10 @@ exports.like = (req, res, next) => {
     // Création des Likes 
 
     let idMessage = req.params.id
-    let headerAuth = req.headers['authorization'];
-    let idUser = jwt.getUserId(headerAuth);
-
+    
+    let idUser = UserId(req)
+    
     const liked = 1;
-
 
     models.Message.findOne({ where: { id: idMessage } })
         .then(messageFound => {

@@ -1,7 +1,7 @@
 // Imports
 
+const UserId = require('../Services/GetUserId')
 const models = require('../models/');
-const jwt = require('jsonwebtoken');
 const TITLE_LIMIT = 2;
 const CONTENT_LIMIT = 4;
 
@@ -13,7 +13,7 @@ exports.createMessage = (req, res, next) => {
 
     //Gettin auth header
 
-   
+    let idUser = UserId(req)
     let title = req.body.title;
     let content = req.body.content;
     let username = req.body.username;
@@ -32,7 +32,7 @@ exports.createMessage = (req, res, next) => {
         return res.status(400).json({ 'erreur': "paramètres invalides" });
     }
     models.User.findOne({
-        where: { id: userId(req) }
+        where: { id: idUser }
     })
         .then(userFound => {
             if (userFound) {

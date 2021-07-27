@@ -43,7 +43,7 @@ exports.admin = (req, res, next) => {
                     })
                         .then(newUser => {
                             return res.status(201).json({
-                                'userId': newUser.id
+                                'userId': UserId
                             })
                         })
                         .catch(err => {
@@ -133,13 +133,12 @@ exports.login = (req,res,next)=>{
              return res.status(404).json({message})
          }
         
-         let verifPass = bcrypt.compareSync(req.body.password,user.password);
+         let verifPass = bcrypt.compare(req.body.password,user.password);
          if(!verifPass){
              const message = 'Password non valide'
              return res.status(401).json({message})
          }
-         const JWT_SIGN_SECRET = 'relou';
-         let token = jwt.sign({userId: user.id}, JWT_SIGN_SECRET, {
+         let token = jwt.sign({userId: user.id}, 'relou', {
              expiresIn : 86400 
          });
          
@@ -148,32 +147,24 @@ exports.login = (req,res,next)=>{
                  username: user.username,
                  token: token,
                  isAdmin: user.isAdmin,
-                 isLog: +1,
-                 
-                 
-             })
- 
+                 isLog: +1,                                  
+             }) 
          })
      
      .catch((err)=>{
          return res.status(500).json({message : err.message})
-     })
- 
+     }) 
  };
 
 // Afficher le profil de l'utilisateur
 
 exports.getUserProfil = (req, res, next) => {
 
-    let headerAuth = req.headers['authorization'];
-    let userId = jwt.getUserId(headerAuth);
-
-    if (userId < 0)
-        return res.status(400).json({ 'erreur': "token erroné" });
+    let idUser = userId(req)
 
     models.User.findOne({
         attributes: ['id', 'email', 'username', 'bio', 'avatar', "isAdmin", "createdAt", "updatedAt"],
-        where: { id: userId }
+        where: { id: idUser }
     }).then(user => {
         if (user) {
             res.status(201).json(user);
@@ -189,8 +180,7 @@ exports.getUserProfil = (req, res, next) => {
 
 exports.updateUserProfil = (req, res, next) => {
 
-    let headerAuth = req.headers['authorization'];
-    let userId = jwt.getUserId(headerAuth);
+    let idUser = userId(req)
     let password = req.body.password;
     let bio = req.body.bio;
     let avatar = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
@@ -198,7 +188,7 @@ exports.updateUserProfil = (req, res, next) => {
 
     models.User.findOne({
         attributes: ['id', 'email', 'username', 'bio', 'avatar', "isAdmin", "createdAt", "updatedAt"],
-        where: { id: userId }
+        where: { id: idUser }
     }).then(userFound => {
         if (userFound) {
             userFound.update({
@@ -227,12 +217,11 @@ exports.updateUserProfil = (req, res, next) => {
 
 exports.deleteUserProfil = (req, res, next) => {
 
-    let headerAuth = req.headers['authorization'];
-    let userId = jwt.getUserId(headerAuth);
+    let idUser = UserId(req)
 
     models.User.findOne({
         attributes: ['id', 'email', 'username', 'bio', 'avatar', "isAdmin", "createdAt", "updatedAt"],
-        where: { id: userId }
+        where: { id: idUser }
     })
         .then((user) => {
             user.destroy();
@@ -259,9 +248,10 @@ exports.getAllUsers = (req, res, next) => {
 
 exports.getOneUser = (req, res, next) => {
 
-    models.User.findByPk(req.params.id)
-        .then(users => {
-            res.status(200).json(users);
+    const idUser= req.params.id
+    models.User.findOne({where : {id: idUser}})
+        .then(user => {
+            res.status(200).json(user);
         }).catch(err => {
             res.status(500).json({ 'erreur': "impossible d'afficher l'utilisateur" });
         })
@@ -271,10 +261,7 @@ exports.getOneUser = (req, res, next) => {
 
 exports.deleteOneUser = (req, res, next) => {
 
-    let headerAuth = req.headers['authorization'];
-    let userId = jwt.getUserId(headerAuth);
-
-    let UserId = req.params.id
+  //  let idUser = UserId(req)
 
     models.User.findOne({
         where: { id: req.params.id }

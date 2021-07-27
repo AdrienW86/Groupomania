@@ -1,9 +1,11 @@
 const models = require('../models/');
+const UserId = require('../Services/GetUserId')
 
 exports.createComment = async (req, res, next) => {
-    let headerAuth = req.headers['authorization'];
-    let userId = jwt.getUserId(headerAuth);
+   
+   
     let messageId = req.params.id;
+    let idUser = UserId(req)
 
     models.Message.findOne({
         where: { id: messageId }
@@ -12,7 +14,7 @@ exports.createComment = async (req, res, next) => {
         if (messageFound) {
 
             models.Comment.create({
-                userId: userId,
+                userId: idUser,
                 messageId: messageId,
                 username: req.body.username,
                 content: req.body.content

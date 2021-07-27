@@ -1,13 +1,12 @@
 // Import 
 
 const express = require('express');
-const app = express();
 const userRoutes = require('./routes/users');
 const messageRoutes = require('./routes/message')
 const helmet = require('helmet');
 const cors = require('cors');
 const path = require('path');
-const auth = require('./middleware/auth')
+const app = express();
 
 // Instances
 
@@ -26,8 +25,6 @@ app.use(helmet());             // Protection contre les injections SQL et XSS
 
 app.use("/images", express.static(path.join(__dirname, 'images')));
 
-module.exports = app;
-
 // Configuration des routes
 
 app.get('/', function (req, res) {
@@ -39,4 +36,3 @@ app.use('/api/auth', messageRoutes)
 app.use('/api/auth', userRoutes)
 
 module.exports = app
-
