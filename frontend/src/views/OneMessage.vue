@@ -220,6 +220,14 @@ export default {
   },
 
   mounted() {
+
+    const log = localStorage.getItem('islog')
+         if(log != 1) {
+            sessionStorage.clear();
+                localStorage.clear();
+                window.location.href = "/login";
+        }else{ 
+
     const messageId = this.$route.params.id;
 
     axios
@@ -261,6 +269,7 @@ export default {
       .catch((err) => {
         console.log(err);
       });
+    }
   },
 };
 </script>

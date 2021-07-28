@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
       return res.status(403).json({message});
      }
     console.log(token)
-    const decodedToken = jwt.verify(token, 'relou');
+    const decodedToken = jwt.verify(token, 'process.env.SECRET.TOKEN');
     console.log(decodedToken)
     const userId = decodedToken.userId;
     console.log(userId)

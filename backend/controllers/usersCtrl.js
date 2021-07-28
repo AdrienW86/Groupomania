@@ -21,7 +21,7 @@ exports.admin = (req, res, next) => {
     let bio = req.body.bio;
     let avatar = `${req.protocol}://${req.get("host")}/images/administration.jpg`
 
-    if (email !== ADMIN_EMAIL || username !== ADMIN_USER || password !== ADMIN_PASS) {
+    if (email !== process.env.ADMIN_EMAIL || username !== process.env.ADMIN_USER || password !== process.env.ADMIN_PASS) {
         return res.status(400).json({ 'erreur': "paramètres manquants " });
     }
 
@@ -43,7 +43,7 @@ exports.admin = (req, res, next) => {
                     })
                         .then(newUser => {
                             return res.status(201).json({
-                                'userId': UserId
+                                'userId': newUser.id
                             })
                         })
                         .catch(err => {
@@ -62,7 +62,7 @@ exports.admin = (req, res, next) => {
 // Création des utilisateurs
 
 exports.sign = (req, res, next) => {
-
+    
     let email = req.body.email;
     let password = req.body.password;
     let username = req.body.username;
@@ -95,6 +95,7 @@ exports.sign = (req, res, next) => {
                 bcrypt.hash(password, 10, function (err, bcryptedPassword) {
 
                     const newUser = models.User.create({
+                        
                         email: email,
                         username: username,
                         password: bcryptedPassword,
@@ -122,6 +123,10 @@ exports.sign = (req, res, next) => {
 
 // Connexion des utilisateurs
 exports.login = (req,res,next)=>{
+    let currentUser = req.body.params
+    let bio = req.body.bio;
+    let avatar = `${req.protocol}://${req.get("host")}/images/user_default.jpg`
+
     models.User.findOne({
          where :{
              email : req.body.email,
@@ -138,13 +143,15 @@ exports.login = (req,res,next)=>{
              const message = 'Password non valide'
              return res.status(401).json({message})
          }
-         let token = jwt.sign({userId: user.id}, 'relou', {
+         let token = jwt.sign({userId: user.id}, 'process.env.SECRET.TOKEN', {
              expiresIn : 86400 
          });
          
              return res.status(200).json({
-                 id: user.id,
+                 id: currentUser,
                  username: user.username,
+                 bio: bio,
+                 avatar: avatar,
                  token: token,
                  isAdmin: user.isAdmin,
                  isLog: +1,                                  
@@ -217,7 +224,7 @@ exports.updateUserProfil = (req, res, next) => {
 
 exports.deleteUserProfil = (req, res, next) => {
 
-    let idUser = UserId(req)
+    let idUser = userId(req)
 
     models.User.findOne({
         attributes: ['id', 'email', 'username', 'bio', 'avatar', "isAdmin", "createdAt", "updatedAt"],

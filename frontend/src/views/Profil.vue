@@ -72,6 +72,7 @@ export default {
   },
 
   methods: {
+
     DeleteUser() {
       window.confirm("Voulez-vous vraiment supprimer ce compte ?");
       axios
@@ -92,6 +93,13 @@ export default {
     },
   },
   mounted() {
+
+    const log = localStorage.getItem('islog')
+         if(log != 1) {
+            sessionStorage.clear();
+                localStorage.clear();
+                window.location.href = "/login";
+        }else{ 
     axios
       .get("http://localhost:8080/api/auth/profil", {
         headers: {
@@ -110,6 +118,7 @@ export default {
       .catch((err) => {
         console.log(err);
       });
+    }
   },
 };
 </script>
