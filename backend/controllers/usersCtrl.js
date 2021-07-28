@@ -123,7 +123,6 @@ exports.sign = (req, res, next) => {
 
 // Connexion des utilisateurs
 exports.login = (req, res, next) => {
-    let currentUser = req.body.params
     let bio = req.body.bio;
     let avatar = `${req.protocol}://${req.get("host")}/images/user_default.jpg`
 
@@ -148,7 +147,7 @@ exports.login = (req, res, next) => {
             });
 
             return res.status(200).json({
-                id: currentUser,
+                id: user.id,
                 username: user.username,
                 bio: bio,
                 avatar: avatar,

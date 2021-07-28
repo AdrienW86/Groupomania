@@ -111,6 +111,7 @@ export default {
           this.users.createdAt = this.users.createdAt.replace(".000Z", "");
           this.users.updatedAt = this.users.updatedAt.replace("T", " à ");
           this.users.updatedAt = this.users.updatedAt.replace(".000Z", "");
+          this.users.id = localStorage.setItem('UserId')
           return this.users;
         })
         .catch((err) => {

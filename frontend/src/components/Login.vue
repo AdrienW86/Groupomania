@@ -97,6 +97,7 @@ export default {
           .post("http://localhost:8080/api/auth/login", userData)
           .then((response) => {
             if (response.status === 200) {
+              console.log(response.data)
               return response;
             } else {
               window.alert("Données invalides");
@@ -105,7 +106,7 @@ export default {
           })
           .then((response) => {
             localStorage.setItem("key", response.data.token);
-            localStorage.setItem("user", response.data.userId);
+            localStorage.setItem("user", response.data.id);
             localStorage.setItem("username", response.data.username);
             localStorage.setItem("bio", response.data.bio);
             localStorage.setItem("isAdmin", response.data.isAdmin);

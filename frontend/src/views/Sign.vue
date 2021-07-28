@@ -97,7 +97,7 @@ export default {
           .then((response) => {
             if (response) {
               alert("Votre profil a bien été enregistré");
-              console.log(response.data.userId);
+              console.log(response.data);
               window.location.href = "/#/login";
             } else {
               alert("données invalides");
