@@ -1,20 +1,15 @@
 const models = require('../models/');
 const UserId = require('../Services/GetUserId')
 
-
-// Constants
-const DISLIKED = 0;
-const LIKED = 1;
-
 // Routes
 exports.like = (req, res, next) => {
 
     // Création des Likes 
 
     let idMessage = req.params.id
-    
+
     let idUser = UserId(req)
-    
+
     const liked = 1;
 
     models.Message.findOne({ where: { id: idMessage } })

@@ -111,16 +111,16 @@ export default {
       }
     },
   },
-  mounted (){
-    const log = localStorage.getItem('islog')
-         if(log != 1) {
-            sessionStorage.clear();
-            localStorage.clear();
-            window.location.href = "/login";
-        }else{
-           console.log(log)
+  mounted() {
+    const log = localStorage.getItem("islog");
+    if (log != 1) {
+      sessionStorage.clear();
+      localStorage.clear();
+      window.location.href = "/login";
+    } else {
+      console.log(log);
     }
-  }
+  },
 };
 </script>
 

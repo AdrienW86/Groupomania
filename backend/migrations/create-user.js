@@ -25,7 +25,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
         unique: true,
-        
+
       },
       avatar: {
         allowNull: true,

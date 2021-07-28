@@ -72,7 +72,6 @@ export default {
   },
 
   methods: {
-
     DeleteUser() {
       window.confirm("Voulez-vous vraiment supprimer ce compte ?");
       axios
@@ -93,31 +92,30 @@ export default {
     },
   },
   mounted() {
-
-    const log = localStorage.getItem('islog')
-         if(log != 1) {
-            sessionStorage.clear();
-                localStorage.clear();
-                window.location.href = "/login";
-        }else{ 
-    axios
-      .get("http://localhost:8080/api/auth/profil", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("key"),
-        },
-      })
-      .then((response) => {
-        this.users = response.data;
-        this.users.createdAt = this.users.createdAt.replace("T", " à ");
-        this.users.createdAt = this.users.createdAt.replace(".000Z", "");
-        this.users.updatedAt = this.users.updatedAt.replace("T", " à ");
-        this.users.updatedAt = this.users.updatedAt.replace(".000Z", "");
-        return this.users;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const log = localStorage.getItem("islog");
+    if (log != 1) {
+      sessionStorage.clear();
+      localStorage.clear();
+      window.location.href = "/login";
+    } else {
+      axios
+        .get("http://localhost:8080/api/auth/profil", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("key"),
+          },
+        })
+        .then((response) => {
+          this.users = response.data;
+          this.users.createdAt = this.users.createdAt.replace("T", " à ");
+          this.users.createdAt = this.users.createdAt.replace(".000Z", "");
+          this.users.updatedAt = this.users.updatedAt.replace("T", " à ");
+          this.users.updatedAt = this.users.updatedAt.replace(".000Z", "");
+          return this.users;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   },
 };
@@ -194,7 +192,7 @@ span {
   color: green;
   font-weight: bold;
 }
-section{
+section {
   margin-bottom: 15px;
 }
 </style>

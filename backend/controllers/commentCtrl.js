@@ -2,8 +2,7 @@ const models = require('../models/');
 const UserId = require('../Services/GetUserId')
 
 exports.createComment = async (req, res, next) => {
-   
-   
+
     let messageId = req.params.id;
     let idUser = UserId(req)
 

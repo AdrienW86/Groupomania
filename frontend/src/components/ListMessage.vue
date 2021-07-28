@@ -20,11 +20,12 @@
                 class="btn-delete"
                 v-if="user == 1 || user == message.UserId"
               >
-                <button aria-label="Supprimer"
+                <button
+                  aria-label="Supprimer"
                   class="btn btn-danger"
                   @click="deleteMessage(message.id)"
                 >
-                  <svg 
+                  <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
                     height="16"
@@ -117,15 +118,11 @@ export default {
   },
 
   methods: {
-
-    
-      
-    
     listMessages() {
       axios
-        .get("http://localhost:8080/api/auth/messages/",{
-            headers: { Authorization: "Bearer " + localStorage.getItem("key")}
-             })
+        .get("http://localhost:8080/api/auth/messages/", {
+          headers: { Authorization: "Bearer " + localStorage.getItem("key") },
+        })
         .then((response) => {
           this.messages = response.data;
           for (let i = 0; i < this.messages.length; i++) {
@@ -193,32 +190,31 @@ export default {
   },
 
   beforeCreate() {
-
-      const log = localStorage.getItem('islog')
-         if(log != 1) {
-            sessionStorage.clear();
-                localStorage.clear();
-                window.location.href = "/login";
-        }else{                             
-    axios
-      .get("http://localhost:8080/api/auth/messages/")
-      .then((response) => {
-        this.messages = response.data;
-        for (let i = 0; i < this.messages.length; i++) {
-          this.messages[i].createdAt = this.messages[i].createdAt.replace(
-            "T",
-            " à "
-          );
-          this.messages[i].createdAt = this.messages[i].createdAt.replace(
-            ".000Z",
-            ""
-          );
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-             }
+    const log = localStorage.getItem("islog");
+    if (log != 1) {
+      sessionStorage.clear();
+      localStorage.clear();
+      window.location.href = "/login";
+    } else {
+      axios
+        .get("http://localhost:8080/api/auth/messages/")
+        .then((response) => {
+          this.messages = response.data;
+          for (let i = 0; i < this.messages.length; i++) {
+            this.messages[i].createdAt = this.messages[i].createdAt.replace(
+              "T",
+              " à "
+            );
+            this.messages[i].createdAt = this.messages[i].createdAt.replace(
+              ".000Z",
+              ""
+            );
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   },
 };
 </script>
@@ -239,7 +235,7 @@ h5 {
   font-style: italic;
 }
 h6 {
-  color:blue;
+  color: blue;
   font-weight: bold;
 }
 section {

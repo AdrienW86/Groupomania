@@ -66,35 +66,40 @@ export default {
   },
 
   mounted() {
+    const log = localStorage.getItem("islog");
+    if (log != 1) {
+      sessionStorage.clear();
+      localStorage.clear();
+      window.location.href = "/login";
+    } else {
+      axios
+        .get("http://localhost:8080/api/auth/users/")
 
-    const log = localStorage.getItem('islog')
-         if(log != 1) {
-            sessionStorage.clear();
-                localStorage.clear();
-                window.location.href = "/login";
-        }else{ 
-    axios
-      .get("http://localhost:8080/api/auth/users/")
-
-      .then((response) => {
-        this.users = response.data;
-        for (let i = 0; i < this.users.length; i++) {
+        .then((response) => {
           this.users = response.data;
-          this.users[i].createdAt = this.users[i].createdAt.replace("T", " à ");
-          this.users[i].createdAt = this.users[i].createdAt.replace(
-            ".000Z",
-            ""
-          );
-          this.users[i].updatedAt = this.users[i].updatedAt.replace("T", " à ");
-          this.users[i].updatedAt = this.users[i].updatedAt.replace(
-            ".000Z",
-            ""
-          );
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+          for (let i = 0; i < this.users.length; i++) {
+            this.users = response.data;
+            this.users[i].createdAt = this.users[i].createdAt.replace(
+              "T",
+              " à "
+            );
+            this.users[i].createdAt = this.users[i].createdAt.replace(
+              ".000Z",
+              ""
+            );
+            this.users[i].updatedAt = this.users[i].updatedAt.replace(
+              "T",
+              " à "
+            );
+            this.users[i].updatedAt = this.users[i].updatedAt.replace(
+              ".000Z",
+              ""
+            );
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   },
   methods: {
@@ -127,7 +132,6 @@ export default {
 main {
   display: flex;
   flex-flow: wrap;
-  
 }
 
 li {
@@ -168,12 +172,14 @@ img {
   font-weight: bold;
 }
 
-.update, .membre {
+.update,
+.membre {
   color: green;
   font-weight: bold;
 }
 
-.create, .admin {
+.create,
+.admin {
   color: red;
   font-weight: bold;
 }

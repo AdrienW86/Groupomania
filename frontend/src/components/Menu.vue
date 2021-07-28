@@ -1,7 +1,10 @@
 <template>
   <section class="router">
     <div class="router_link">
-      <router-link aria-label="link pour aller sur la page messages" to="/messages">
+      <router-link
+        aria-label="link pour aller sur la page messages"
+        to="/messages"
+      >
         <h2>Messages</h2>
       </router-link>
     </div>

@@ -62,7 +62,7 @@ exports.admin = (req, res, next) => {
 // Création des utilisateurs
 
 exports.sign = (req, res, next) => {
-    
+
     let email = req.body.email;
     let password = req.body.password;
     let username = req.body.username;
@@ -95,7 +95,7 @@ exports.sign = (req, res, next) => {
                 bcrypt.hash(password, 10, function (err, bcryptedPassword) {
 
                     const newUser = models.User.create({
-                        
+
                         email: email,
                         username: username,
                         password: bcryptedPassword,
@@ -122,46 +122,46 @@ exports.sign = (req, res, next) => {
 }
 
 // Connexion des utilisateurs
-exports.login = (req,res,next)=>{
+exports.login = (req, res, next) => {
     let currentUser = req.body.params
     let bio = req.body.bio;
     let avatar = `${req.protocol}://${req.get("host")}/images/user_default.jpg`
 
     models.User.findOne({
-         where :{
-             email : req.body.email,
+        where: {
+            email: req.body.email,
         }
-     })
-     .then((user)=>{
-         if(!user){
-             const message= 'User non trouvé!'
-             return res.status(404).json({message})
-         }
-        
-         let verifPass = bcrypt.compare(req.body.password,user.password);
-         if(!verifPass){
-             const message = 'Password non valide'
-             return res.status(401).json({message})
-         }
-         let token = jwt.sign({userId: user.id}, 'process.env.SECRET.TOKEN', {
-             expiresIn : 86400 
-         });
-         
-             return res.status(200).json({
-                 id: currentUser,
-                 username: user.username,
-                 bio: bio,
-                 avatar: avatar,
-                 token: token,
-                 isAdmin: user.isAdmin,
-                 isLog: +1,                                  
-             }) 
-         })
-     
-     .catch((err)=>{
-         return res.status(500).json({message : err.message})
-     }) 
- };
+    })
+        .then((user) => {
+            if (!user) {
+                const message = 'User non trouvé!'
+                return res.status(404).json({ message })
+            }
+
+            let verifPass = bcrypt.compare(req.body.password, user.password);
+            if (!verifPass) {
+                const message = 'Password non valide'
+                return res.status(401).json({ message })
+            }
+            let token = jwt.sign({ userId: user.id }, 'process.env.SECRET.TOKEN', {
+                expiresIn: 86400
+            });
+
+            return res.status(200).json({
+                id: currentUser,
+                username: user.username,
+                bio: bio,
+                avatar: avatar,
+                token: token,
+                isAdmin: user.isAdmin,
+                isLog: +1,
+            })
+        })
+
+        .catch((err) => {
+            return res.status(500).json({ message: err.message })
+        })
+};
 
 // Afficher le profil de l'utilisateur
 
@@ -255,8 +255,8 @@ exports.getAllUsers = (req, res, next) => {
 
 exports.getOneUser = (req, res, next) => {
 
-    const idUser= req.params.id
-    models.User.findOne({where : {id: idUser}})
+    const idUser = req.params.id
+    models.User.findOne({ where: { id: idUser } })
         .then(user => {
             res.status(200).json(user);
         }).catch(err => {
@@ -268,7 +268,7 @@ exports.getOneUser = (req, res, next) => {
 
 exports.deleteOneUser = (req, res, next) => {
 
-  //  let idUser = UserId(req)
+    //  let idUser = UserId(req)
 
     models.User.findOne({
         where: { id: req.params.id }

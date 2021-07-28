@@ -5,13 +5,9 @@ const models = require('../models/');
 const TITLE_LIMIT = 2;
 const CONTENT_LIMIT = 4;
 
-// Routes
-
 // Création d'un message
 
 exports.createMessage = (req, res, next) => {
-
-    //Gettin auth header
 
     let idUser = UserId(req)
     let title = req.body.title;

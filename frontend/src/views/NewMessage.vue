@@ -3,7 +3,10 @@
     <Header />
     <Menu />
     <section class="row card bg-light m-5 p-3">
-      <form enctype="multipart/form-data" aria-label="formulaire pour nouveau message">
+      <form
+        enctype="multipart/form-data"
+        aria-label="formulaire pour nouveau message"
+      >
         <div class="row">
           <div class="col-12 justify-content-center form-group">
             <label for="message_title">Titre de votre message</label>
@@ -105,7 +108,6 @@ export default {
         formData.append("isAdmin", localStorage.getItem("isAdmin"));
         formData.append("content", this.message.content.toString());
         formData.append("title", this.message.title.toString());
-        
 
         axios
           .post("http://localhost:8080/api/auth/messages/new/", formData, {
@@ -124,14 +126,15 @@ export default {
     },
   },
   mounted() {
-    const log = localStorage.getItem('islog')
-      if(log != 1) {
-          sessionStorage.clear();
-          localStorage.clear();
-          window.location.href = "/login";
-      }else{console.log(log)
+    const log = localStorage.getItem("islog");
+    if (log != 1) {
+      sessionStorage.clear();
+      localStorage.clear();
+      window.location.href = "/login";
+    } else {
+      console.log(log);
     }
-  }
+  },
 };
 </script>
 

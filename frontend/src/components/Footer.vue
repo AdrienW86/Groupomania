@@ -4,17 +4,41 @@
       <section class="infos">
         <h4>Partenaires</h4>
         <ul class="liens">
-          <li><a aria-roledescription="lien vers le site Openclassrooms" href="https://openclassrooms.com/fr">  OpenClassrooms </a></li>
           <li>
-            <a aria-roledescription="lien vers le site Developer Mozilla" href="https://developer.mozilla.org/fr/"> Developer Mozilla </a>
+            <a
+              aria-roledescription="lien vers le site Openclassrooms"
+              href="https://openclassrooms.com/fr"
+            >
+              OpenClassrooms
+            </a>
           </li>
-          <li><a aria aria-roledescription="lien vers le site de Vue.js" href="https://vuejs.org/"> Vue.Js </a></li>
+          <li>
+            <a
+              aria-roledescription="lien vers le site Developer Mozilla"
+              href="https://developer.mozilla.org/fr/"
+            >
+              Developer Mozilla
+            </a>
+          </li>
+          <li>
+            <a
+              aria
+              aria-roledescription="lien vers le site de Vue.js"
+              href="https://vuejs.org/"
+            >
+              Vue.Js
+            </a>
+          </li>
         </ul>
       </section>
-      <section  class="infos">
+      <section class="infos">
         <h4>Contacts</h4>
         <ul class="liens">
-          <li><a aria-roledescription="" href="mailto: adrien_Weiss@outlook.fr"> Messagerie</a></li>
+          <li>
+            <a aria-roledescription="" href="mailto: adrien_Weiss@outlook.fr">
+              Messagerie</a
+            >
+          </li>
           <li>+33 1 80 88 80 30</li>
           <li><a href="https://openclassrooms.com/forum/"> FAQ </a></li>
         </ul>
@@ -45,7 +69,7 @@ nav {
 h4 {
   font-weight: bold;
   font-size: 1.2em;
-  color: rgb(94, 7, 7)
+  color: rgb(94, 7, 7);
 }
 
 li {

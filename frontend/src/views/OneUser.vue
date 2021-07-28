@@ -52,30 +52,29 @@ export default {
     };
   },
   mounted() {
-    const log = localStorage.getItem('islog')
-         if(log != 1) {
-            sessionStorage.clear();
-                localStorage.clear();
-                window.location.href = "/login";
-        }else{ 
+    const log = localStorage.getItem("islog");
+    if (log != 1) {
+      sessionStorage.clear();
+      localStorage.clear();
+      window.location.href = "/login";
+    } else {
+      const userId = this.$route.params.id;
+      axios
+        .get(`http://localhost:8080/api/auth/users/${userId}`, {
+          headers: { Authorization: "Bearer " + localStorage.getItem("key") },
+        })
+        .then((response) => {
+          this.user = response.data;
 
-    const userId = this.$route.params.id;
-    axios
-      .get(`http://localhost:8080/api/auth/users/${userId}`, {
-        headers: { Authorization: "Bearer " + localStorage.getItem("key") },
-      })
-      .then((response) => {
-        this.user = response.data;
-
-        this.user.createdAt = this.user.createdAt.replace("T", " à ");
-        this.user.updatedAt = this.user.updatedAt.replace("T", " à ");
-        this.user.updatedAt = this.user.updatedAt.replace(".000Z", "");
-        this.user.createdAt = this.user.createdAt.replace(".000Z", "");
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+          this.user.createdAt = this.user.createdAt.replace("T", " à ");
+          this.user.updatedAt = this.user.updatedAt.replace("T", " à ");
+          this.user.updatedAt = this.user.updatedAt.replace(".000Z", "");
+          this.user.createdAt = this.user.createdAt.replace(".000Z", "");
+          console.log(response);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   },
 };
@@ -86,8 +85,7 @@ export default {
   display: flex;
   justify-content: center;
   width: 80%;
-  margin: 12% 10% 12% 10%
-
+  margin: 12% 10% 12% 10%;
 }
 
 .card {

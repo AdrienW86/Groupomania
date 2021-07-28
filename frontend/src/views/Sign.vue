@@ -40,13 +40,15 @@
         required
       />
 
-      <button aria-label="bouton d'enregistement"
+      <button
+        aria-label="bouton d'enregistement"
         id="sign_btn"
         type="submit"
         class="btn btn-primary"
-        @click.stop.prevent="Sign()">
-        Envoyer
-      </button>/>
+        @click.stop.prevent="Sign()"
+      >
+        Envoyer</button
+      >/>
     </form>
     <Footer />
   </div>

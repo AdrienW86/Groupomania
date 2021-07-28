@@ -37,7 +37,8 @@
         required
       />
 
-      <button aria-label="bouton de connexion"
+      <button
+        aria-label="bouton de connexion"
         id="login"
         type="submit"
         class="btn btn-primary"

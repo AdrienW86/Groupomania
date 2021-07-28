@@ -28,7 +28,8 @@
           >
           </textarea>
           <div class="btn-comment">
-            <button aria-label="envoyer"
+            <button
+              aria-label="envoyer"
               type="submit"
               class="btn btn-primary"
               @click.prevent.stop="commentMessage(message.id)"
@@ -52,7 +53,8 @@
       <div class="card-footer">
         <p>message posté le: {{ message.createdAt }}</p>
         <div class="box-btn">
-          <button aria-label="Liker"
+          <button
+            aria-label="Liker"
             type="button"
             class="btn btn-success"
             @click="like(message.id)"
@@ -81,7 +83,8 @@
             >
               <div class="comment-username">
                 <div>
-                  <button aria-label="supprimer"
+                  <button
+                    aria-label="supprimer"
                     v-if="commentaire.userId == currentUser || currentUser == 1"
                     class="btn btn-danger"
                     @click="deleteComment(commentaire.id)"
@@ -220,55 +223,53 @@ export default {
   },
 
   mounted() {
+    const log = localStorage.getItem("islog");
+    if (log != 1) {
+      sessionStorage.clear();
+      localStorage.clear();
+      window.location.href = "/login";
+    } else {
+      const messageId = this.$route.params.id;
 
-    const log = localStorage.getItem('islog')
-         if(log != 1) {
-            sessionStorage.clear();
-                localStorage.clear();
-                window.location.href = "/login";
-        }else{ 
+      axios
+        .get(`http://localhost:8080/api/auth/messages/${messageId}`, {
+          headers: { Authorization: "Bearer " + localStorage.getItem("key") },
+        })
+        .then((response) => {
+          this.message = response.data;
+          this.message.content = response.data.content;
+          this.message.title = response.data.title;
+          this.message.username = response.data.username;
 
-    const messageId = this.$route.params.id;
+          this.message.createdAt = this.message.createdAt.replace("T", " à ");
+          this.message.createdAt = this.message.createdAt.replace(".000Z", "");
 
-    axios
-      .get(`http://localhost:8080/api/auth/messages/${messageId}`, {
-        headers: { Authorization: "Bearer " + localStorage.getItem("key") },
-      })
-      .then((response) => {
-        this.message = response.data;
-        this.message.content = response.data.content;
-        this.message.title = response.data.title;
-        this.message.username = response.data.username;
+          console.log(response);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
-        this.message.createdAt = this.message.createdAt.replace("T", " à ");
-        this.message.createdAt = this.message.createdAt.replace(".000Z", "");
+      axios
+        .get(`http://localhost:8080/api/auth/messages/comments/${messageId}`, {
+          headers: { Authorization: "Bearer " + localStorage.getItem("key") },
+        })
+        .then((response) => {
+          this.commentaires = response.data;
 
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    axios
-      .get(`http://localhost:8080/api/auth/messages/comments/${messageId}`, {
-        headers: { Authorization: "Bearer " + localStorage.getItem("key") },
-      })
-      .then((response) => {
-        this.commentaires = response.data;
-
-        for (let i = 0; i < this.commentaires.length; i++) {
-          this.commentaires[i].createdAt = this.commentaires[
-            i
-          ].createdAt.replace("T", " à ");
-          this.commentaires[i].createdAt = this.commentaires[
-            i
-          ].createdAt.replace(".000Z", "");
-        }
-        console.log(this.commentaires);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+          for (let i = 0; i < this.commentaires.length; i++) {
+            this.commentaires[i].createdAt = this.commentaires[
+              i
+            ].createdAt.replace("T", " à ");
+            this.commentaires[i].createdAt = this.commentaires[
+              i
+            ].createdAt.replace(".000Z", "");
+          }
+          console.log(this.commentaires);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   },
 };
@@ -296,7 +297,7 @@ h3 {
   margin: 20px;
 }
 h5 {
-  color:blue;
+  color: blue;
   margin-bottom: 10px;
   font-weight: bold;
 }

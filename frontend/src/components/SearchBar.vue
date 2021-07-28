@@ -1,6 +1,7 @@
 <template>
   <section>
-    <input aria-label="barre de recherche"
+    <input
+      aria-label="barre de recherche"
       type="search"
       class="search"
       placeholder="Votre recherche"

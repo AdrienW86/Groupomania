@@ -5,8 +5,6 @@ import store from './store'
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
-
-
 Vue.config.productionTip = false
 
 Vue.use(BootstrapVue)
