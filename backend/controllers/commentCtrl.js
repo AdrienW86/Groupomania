@@ -6,31 +6,49 @@ exports.createComment = async (req, res, next) => {
     let messageId = req.params.id;
     let idUser = UserId(req)
 
-    models.Message.findOne({
-        where: { id: messageId }
+    models.User.findOne ({
+        where: {id: idUser}
 
-    }).then(messageFound => {
-        if (messageFound) {
+    }).then(userFound => {
+       if(userFound) {
 
-            models.Comment.create({
-                userId: idUser,
-                messageId: messageId,
-                username: req.body.username,
-                content: req.body.content
-
-            }).then(response => {
-                res.status(201).send(response)
-            })
-                .catch(err => {
-                    res.status(500).send(err)
+        models.Message.findOne({
+            where: { id: messageId }
+    
+        }).then(messageFound => {
+            if (messageFound) {
+    
+                models.Comment.create({
+                    userId: idUser,
+                    messageId: messageId,
+                    username: req.body.username,
+                    content: req.body.content
+    
+                }).then(response => {
+                    res.status(201).send(response)
                 })
-        } else {
-            res.status(404).json({ erreur: "message introuvable" })
-        }
-    }).catch(err => {
-        res.status(404).json({ erreur: "umessage introuvable" })
+                    .catch(err => {
+                        res.status(500).send(err)
+                    })
+            } else {
+                res.status(404).json({ erreur: "message introuvable" })
+            }
+        }).catch(err => {
+            res.status(404).json({ erreur: "umessage introuvable" })
+        })
+    
+
+
+
+       }else{
+           res.status(404).json({erreur : "utilisateur introuvable"})
+       }     
+
+    }).catch(err=> {
+        res.status(404).json({ erreur: "impossible d'identifier l'utilisateur"})
     })
-},
+
+} 
     exports.getAllComments = (req, res, next) => {
 
         let messageId = req.params.id;
@@ -66,6 +84,14 @@ exports.deleteOneComment = (req, res, next) => {
 
     let commentId = req.params.id
 
+    
+    models.User.findOne ({
+        where: {id: idUser}
+
+    }).then(userFound => {
+       if(userFound) {
+
+
     models.Comment.findOne({
         where: { id: commentId }
 
@@ -90,4 +116,12 @@ exports.deleteOneComment = (req, res, next) => {
         res.status(404).json(err)
     })
 
+
+}else{
+    res.status(404).json({erreur : "utilisateur introuvable"})
+}     
+
+}).catch(err=> {
+ res.status(404).json({ erreur: "impossible d'identifier l'utilisateur"})
+})
 }

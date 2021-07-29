@@ -142,7 +142,7 @@ exports.login = (req, res, next) => {
                 const message = 'Password non valide'
                 return res.status(401).json({ message })
             }
-            let token = jwt.sign({ userId: user.id }, 'process.env.SECRET.TOKEN', {
+            let token = jwt.sign({ userId: user.id }, process.env.SECRET.TOKEN, {
                 expiresIn: 86400
             });
 

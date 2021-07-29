@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
       const message = "No Token provided"
       return res.status(403).json({ message });
     }
-    const decodedToken = jwt.verify(token, 'process.env.SECRET.TOKEN');
+    const decodedToken = jwt.verify(token, process.env.SECRET.TOKEN);
     const userId = decodedToken.userId;
     if (req.body.userId && req.body.userId !== userId) {
       throw 'Invalid user ID';
